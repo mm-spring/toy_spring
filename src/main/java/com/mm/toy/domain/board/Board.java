@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 public class Board {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
