@@ -15,10 +15,10 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column
     @Id
-    @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long board_id;
 
     @Column
     private String title;
