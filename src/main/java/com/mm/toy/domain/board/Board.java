@@ -20,16 +20,12 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String title;
 
-    @Column
     private String content;
 
-    @Column
     private String author;
 
-    @Column
     private String imgUrl;
 
 }
