@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    embedded-database-connection: h2
+    driver-class-name: org.h2.Driver
