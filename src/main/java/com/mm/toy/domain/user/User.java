@@ -6,16 +6,14 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "users")
+@Table(name = "users")      //test시 h2 데이터베이스 사용하는데, 해당 데이터베이스에는 user 명칭 사용 안됨
 @Entity
 public class User {
 
     @Id
-    @Column(name = "user_id")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long user_id;
 
     @Column
     private String username;
@@ -32,7 +30,4 @@ public class User {
     @Column
     private String name;
 
-    public void updatePassword(String password) {
-        this.password = password;
-    }
 }

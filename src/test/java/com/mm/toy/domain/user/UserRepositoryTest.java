@@ -42,6 +42,7 @@ class UserRepositoryTest {
         List<User> all = userRepository.findAll();
         assertThat(all.size()).isOne();
     }
+
     @Test
     @Transactional
     @DisplayName("유저를 생성 뒤 수정합니다.")
@@ -56,7 +57,7 @@ class UserRepositoryTest {
         User save = userRepository.save(user1);
         String updatePassword = "updatePassword";
         //when
-        save.updatePassword(updatePassword);
+        //TODO setter 명칭이 아닌 user 내 메서드를 사용해서 password 변경하기
         //then
         User findUser = userRepository.findAll().get(0);
         assertThat(findUser.getPassword()).isEqualTo(updatePassword);
@@ -65,16 +66,9 @@ class UserRepositoryTest {
     @Test
     @DisplayName("유저를 생성 뒤 삭제합니다.")
     public void deleteUser() {
-        //given
-        User user1 = User.builder()
-                .email("email")
-                .role("role")
-                .name("name")
-                .password("password")
-                .build();
-        User save = userRepository.save(user1);
-        //when
-        userRepository.delete(save);
+        //TODO 위 create와 update을 참고하여 완성하기
+        // given: create user(개수 1)
+        // when: delete user
         //then
         assertThat(userRepository.findAll().size()).isZero();
     }
@@ -98,7 +92,7 @@ class UserRepositoryTest {
         List<User> users = userRepository.saveAll(List.of(user1, user2));
 
         //when
-        Optional<User> byId = userRepository.findById(users.get(0).getId());
+        //TODO id를 통해 Optional user를 가져온다. 이때 변수명은 byId
         //then
         assertThat(byId).isPresent();
         assertThat(byId.get().getName()).isEqualTo(user1.getName());
@@ -128,7 +122,7 @@ class UserRepositoryTest {
                 .build();
         List<User> users = userRepository.saveAll(List.of(user1, user2, user3));
         //when
-        List<User> findUsers = userRepository.findByName(users.get(0).getName());
+        //TODO name을 통해 list user를 가져온다. 이때 argu는 users의 첫번째 객체의 네임으로 사용한다. 가져온 변수명은 findUsers
         //then
         assertThat(findUsers.size()).isEqualTo(2);
         assertThat(findUsers).anyMatch(user -> user.getPassword().equals(user1.getPassword()));
