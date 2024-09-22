@@ -101,6 +101,8 @@ class UserRepositoryTest {
 
         //when
         //TODO id를 통해 Optional user를 가져온다. 이때 변수명은 byId
+        Long id = user1.getId();
+        Optional<User> byId = userRepository.findById(id);
         //then
         assertThat(byId).isPresent();
         assertThat(byId.get().getName()).isEqualTo(user1.getName());
