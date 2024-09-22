@@ -2,6 +2,7 @@ package com.mm.toy.domain.user;
 
 import com.mm.toy.domain.board.Board;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 public class User {
 
     @Id
@@ -35,4 +37,9 @@ public class User {
 
     @Column
     private String name;
+
+    void updatePassword(String updatePassword){
+        this.password = updatePassword;
+    }
+
 }

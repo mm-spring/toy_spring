@@ -58,6 +58,7 @@ class UserRepositoryTest {
         String updatePassword = "updatePassword";
         //when
         //TODO setter 명칭이 아닌 user 내 메서드를 사용해서 password 변경하기
+        user1.updatePassword(updatePassword);
         //then
         User findUser = userRepository.findAll().get(0);
         assertThat(findUser.getPassword()).isEqualTo(updatePassword);
