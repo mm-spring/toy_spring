@@ -69,7 +69,14 @@ class UserRepositoryTest {
     public void deleteUser() {
         //TODO 위 create와 update을 참고하여 완성하기
         // given: create user(개수 1)
+        User user1 = User.builder()
+                .email("email")
+                .role("role")
+                .name("name")
+                .password("password")
+                .build();
         // when: delete user
+        userRepository.delete(user1);
         //then
         assertThat(userRepository.findAll().size()).isZero();
     }
