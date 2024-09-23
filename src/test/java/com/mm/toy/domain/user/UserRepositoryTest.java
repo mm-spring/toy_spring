@@ -58,6 +58,7 @@ class UserRepositoryTest {
         String updatePassword = "updatePassword";
         //when
         //TODO setter 명칭이 아닌 user 내 메서드를 사용해서 password 변경하기
+        user1.updatePassword(updatePassword);
         //then
         User findUser = userRepository.findAll().get(0);
         assertThat(findUser.getPassword()).isEqualTo(updatePassword);
@@ -68,7 +69,15 @@ class UserRepositoryTest {
     public void deleteUser() {
         //TODO 위 create와 update을 참고하여 완성하기
         // given: create user(개수 1)
+        User user1 = User.builder()
+                .email("email")
+                .role("role")
+                .name("name")
+                .password("password")
+                .build();
+        userRepository.save(user1);
         // when: delete user
+        userRepository.delete(user1);
         //then
         assertThat(userRepository.findAll().size()).isZero();
     }
@@ -93,6 +102,7 @@ class UserRepositoryTest {
 
         //when
         //TODO id를 통해 Optional user를 가져온다. 이때 변수명은 byId
+        Optional<User> byId = userRepository.findById(user1.getId());
         //then
         assertThat(byId).isPresent();
         assertThat(byId.get().getName()).isEqualTo(user1.getName());
@@ -123,6 +133,7 @@ class UserRepositoryTest {
         List<User> users = userRepository.saveAll(List.of(user1, user2, user3));
         //when
         //TODO name을 통해 list user를 가져온다. 이때 argu는 users의 첫번째 객체의 네임으로 사용한다. 가져온 변수명은 findUsers
+        List<User> findUsers = userRepository.findByName(users.get(0).getName());
         //then
         assertThat(findUsers.size()).isEqualTo(2);
         assertThat(findUsers).anyMatch(user -> user.getPassword().equals(user1.getPassword()));
