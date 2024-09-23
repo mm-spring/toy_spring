@@ -75,6 +75,7 @@ class UserRepositoryTest {
                 .name("name")
                 .password("password")
                 .build();
+        userRepository.save(user1);
         // when: delete user
         userRepository.delete(user1);
         //then
