@@ -102,8 +102,7 @@ class UserRepositoryTest {
 
         //when
         //TODO id를 통해 Optional user를 가져온다. 이때 변수명은 byId
-        Long id = user1.getId();
-        Optional<User> byId = userRepository.findById(id);
+        Optional<User> byId = userRepository.findById(user1.getId());
         //then
         assertThat(byId).isPresent();
         assertThat(byId.get().getName()).isEqualTo(user1.getName());
@@ -134,8 +133,7 @@ class UserRepositoryTest {
         List<User> users = userRepository.saveAll(List.of(user1, user2, user3));
         //when
         //TODO name을 통해 list user를 가져온다. 이때 argu는 users의 첫번째 객체의 네임으로 사용한다. 가져온 변수명은 findUsers
-        String name = users.get(0).getName();
-        List<User> findUsers = userRepository.findByName(name);
+        List<User> findUsers = userRepository.findByName(users.get(0).getName());
         //then
         assertThat(findUsers.size()).isEqualTo(2);
         assertThat(findUsers).anyMatch(user -> user.getPassword().equals(user1.getPassword()));
