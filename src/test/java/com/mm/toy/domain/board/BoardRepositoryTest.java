@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +43,7 @@ class BoardRepositoryTest {
         user2 = User.builder()
                 .username("username2")
                 .password("password2")
-                .email("eamil2")
+                .email("email2")
                 .name("name2")
                 .build();
         userRepository.saveAll(List.of(user1, user2));
@@ -139,7 +140,6 @@ class BoardRepositoryTest {
                 .build();
         user1.addBoard(board1);
 
-        // given
         Board board2 = Board.builder()
                 .user(user1)
                 .title("title2")
@@ -159,6 +159,42 @@ class BoardRepositoryTest {
         assertThat(boards.size()).isEqualTo(2);
         assertThat(boards.get(0).getTitle()).isEqualTo(findBoard.get().getTitle());
         
+    }
+
+    void getBoardByTitle(){
+        // given
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
+        user1.addBoard(board1);
+
+        Board board2 = Board.builder()
+                .user(user1)
+                .title("title2")
+                .content("content2")
+                .author("author2")
+                .imgUrl("imgUrl2")
+                .build();
+        user1.addBoard(board2);
+
+        Board board3 = Board.builder()
+                .user(user1)
+                .title("title3")
+                .content("content3")
+                .author("author3")
+                .imgUrl("imgUrl3")
+                .build();
+        user1.addBoard(board3);
+
+        boardRepository.saveAll(List.of(board1, board2, board3));
+
+        // when
+        boardRepository.findByTitle("title1");
+
     }
 
 }
