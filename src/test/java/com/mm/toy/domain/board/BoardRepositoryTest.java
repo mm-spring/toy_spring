@@ -73,19 +73,20 @@ class BoardRepositoryTest {
     @Test
     void updateBoard(){
         // given
-        Board board1 = new Board();
-        board1.setTitle("Title1");
-        board1.setAuthor("User1");
-        board1.setContent("Update1");
-        boardRepository.save(board1);
-        board1.setUser(user1);
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
 
         String convertedTitle = "convertedTitle";
         String convertedContent = "convertedContent";
 
         // when
-        board1.setTitle(convertedTitle);
-        board1.setContent(convertedContent);
+        board1.updateTitle(convertedTitle);
+        board1.updateContent(convertedContent);
 
         // then
         Optional<Board> optionalBoard = boardRepository.findById(board1.getId());
@@ -97,12 +98,13 @@ class BoardRepositoryTest {
     @Test
     void deleteBoard(){
         // given
-        Board board1 = new Board();
-        board1.setTitle("Title1");
-        board1.setAuthor("User1");
-        board1.setContent("Update1");
-        boardRepository.save(board1);
-        board1.setUser(user1);
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
 
         // when
         Board findBoard = boardRepository.findAll().get(0);
@@ -116,20 +118,22 @@ class BoardRepositoryTest {
     @Test
     void getBoardById(){
         // given
-        Board board1 = new Board();
-        board1.setTitle("Title1");
-        board1.setAuthor("User1");
-        board1.setContent("Update1");
-        board1.setUser(user1);
-        boardRepository.save(board1);
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
 
         // given
-        Board board2 = new Board();
-        board2.setTitle("Title2");
-        board2.setAuthor("User2");
-        board2.setContent("Update2");
-        board2.setUser(user1);
-        boardRepository.save(board2);
+        Board board2 = Board.builder()
+                .user(user1)
+                .title("title2")
+                .content("content2")
+                .author("author2")
+                .imgUrl("imgUrl2")
+                .build();
 
         // when
         Long findId = boardRepository.findAll().get(0).getId();
