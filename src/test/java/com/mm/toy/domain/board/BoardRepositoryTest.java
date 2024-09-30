@@ -203,4 +203,36 @@ class BoardRepositoryTest {
 
     }
 
+    @Test
+    void getBoardByUser(){
+        // given
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
+        user1.addBoard(board1);
+
+        Board board2 = Board.builder()
+                .user(user2)
+                .title("title2")
+                .content("content2")
+                .author("author2")
+                .imgUrl("imgUrl2")
+                .build();
+        user2.addBoard(board2);
+
+        boardRepository.saveAll(List.of(board1, board2));
+
+        // when
+        List<Board> boards = boardRepository.findByUser_Id(user1.getId());
+
+        //then
+        assertThat(boards.size()).isOne();
+        assertThat(boards.get(0).getUser()).isEqualTo(user1);
+
+    }
+
 }
