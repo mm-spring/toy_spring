@@ -131,6 +131,7 @@ class BoardRepositoryTest {
                 .author("author1")
                 .imgUrl("imgUrl1")
                 .build();
+        user1.addBoard(board1);
 
         // given
         Board board2 = Board.builder()
@@ -140,6 +141,7 @@ class BoardRepositoryTest {
                 .author("author2")
                 .imgUrl("imgUrl2")
                 .build();
+        user1.addBoard(board2);
 
         boardRepository.saveAll(List.of(board1, board2));
 
