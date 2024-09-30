@@ -56,13 +56,16 @@ class BoardRepositoryTest {
     @Test
     void createBoard(){
         // given
-        Board board1 = new Board();
-        board1.setTitle("Title1");
-        board1.setAuthor("User1");
-        boardRepository.save(board1);
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
 
         // when
-        board1.setUser(user1);
+        boardRepository.save(board1);
 
         //then
         List<Board> boards = boardRepository.findAll();
@@ -80,6 +83,8 @@ class BoardRepositoryTest {
                 .author("author1")
                 .imgUrl("imgUrl1")
                 .build();
+
+        boardRepository.save(board1);
 
         String convertedTitle = "convertedTitle";
         String convertedContent = "convertedContent";
@@ -106,9 +111,10 @@ class BoardRepositoryTest {
                 .imgUrl("imgUrl1")
                 .build();
 
+        boardRepository.save(board1);
+
         // when
-        Board findBoard = boardRepository.findAll().get(0);
-        boardRepository.deleteById(findBoard.getId());
+        boardRepository.deleteById(boardRepository.findAll().get(0).getId());
 
         //then
         List<Board> boards = boardRepository.findAll();
@@ -135,13 +141,15 @@ class BoardRepositoryTest {
                 .imgUrl("imgUrl2")
                 .build();
 
+        boardRepository.saveAll(List.of(board1, board2));
+
         // when
-        Long findId = boardRepository.findAll().get(0).getId();
+        Optional<Board> findBoard = boardRepository.findById(board1.getId());
 
         //then
         List<Board> boards = user1.getBoards();
         assertThat(boards.size()).isEqualTo(2);
-        assertThat(boards.get(0).getTitle()).isEqualTo(board2.getTitle());
+        assertThat(boards.get(0).getTitle()).isEqualTo(findBoard.get().getTitle());
         
     }
 

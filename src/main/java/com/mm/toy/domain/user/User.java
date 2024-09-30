@@ -37,4 +37,8 @@ public class User {
         this.password = updatePassword;
     }
 
+    void addBoard(Board board){
+        this.boards.add(board);
+    }
+
 }
