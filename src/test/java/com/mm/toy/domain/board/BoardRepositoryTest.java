@@ -161,6 +161,7 @@ class BoardRepositoryTest {
         
     }
 
+    @Test
     void getBoardByTitle(){
         // given
         Board board1 = Board.builder()
@@ -183,7 +184,7 @@ class BoardRepositoryTest {
 
         Board board3 = Board.builder()
                 .user(user1)
-                .title("title3")
+                .title("title1")
                 .content("content3")
                 .author("author3")
                 .imgUrl("imgUrl3")
@@ -192,8 +193,13 @@ class BoardRepositoryTest {
 
         boardRepository.saveAll(List.of(board1, board2, board3));
 
+        String givenTitle = "title1";
+
         // when
-        boardRepository.findByTitle("title1");
+
+        //then
+        List<Board> boards = boardRepository.findByTitle(givenTitle);
+        assertThat(boards.size()).isEqualTo(2);
 
     }
 
