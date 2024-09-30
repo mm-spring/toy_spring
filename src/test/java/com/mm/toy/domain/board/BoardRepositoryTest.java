@@ -204,7 +204,7 @@ class BoardRepositoryTest {
     }
 
     @Test
-    void getBoardByUser(){
+    void getBoardByUserId(){
         // given
         Board board1 = Board.builder()
                 .user(user1)
@@ -232,6 +232,48 @@ class BoardRepositoryTest {
         //then
         assertThat(boards.size()).isOne();
         assertThat(boards.get(0).getUser()).isEqualTo(user1);
+
+    }
+
+    @Test
+    void getBoardByUser(){
+        // given
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
+        user1.addBoard(board1);
+
+        Board board2 = Board.builder()
+                .user(user1)
+                .title("title2")
+                .content("content2")
+                .author("author2")
+                .imgUrl("imgUrl2")
+                .build();
+        user2.addBoard(board2);
+
+        Board board3 = Board.builder()
+                .user(user1)
+                .title("title3")
+                .content("content3")
+                .author("author3")
+                .imgUrl("imgUrl3")
+                .build();
+        user2.addBoard(board3);
+
+        boardRepository.saveAll(List.of(board1, board2, board3));
+
+        // when
+        List<Board> boards1 = user1.getBoards();
+        List<Board> boards2 = user2.getBoards();
+
+        // then
+        assertThat(boards1.size()).isOne();
+        assertThat(boards2.size()).isEqualTo(2);
 
     }
 
