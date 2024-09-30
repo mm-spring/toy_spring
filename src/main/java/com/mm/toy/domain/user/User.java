@@ -2,15 +2,17 @@ package com.mm.toy.domain.user;
 
 import com.mm.toy.domain.board.Board;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
@@ -18,21 +20,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
-    @Column
     private String username;
 
-    @Column
     private String password;
 
-    @Column
     private String email;
 
-    @Column
     private String role;
 
-    @Column
     private String name;
+
+    void updatePassword(String updatePassword){
+        this.password = updatePassword;
+    }
+
+    public void addBoard(Board board){
+        this.boards.add(board);
+    }
+
 }
