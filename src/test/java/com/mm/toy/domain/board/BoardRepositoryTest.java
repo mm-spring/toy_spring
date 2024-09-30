@@ -94,4 +94,23 @@ class BoardRepositoryTest {
         assertThat(optionalBoard.get().getContent()).isEqualTo(convertedContent);
     }
 
+    @Test
+    void deleteBoard(){
+        // given
+        Board board1 = new Board();
+        board1.setTitle("Title1");
+        board1.setAuthor("User1");
+        board1.setContent("Update1");
+        boardRepository.save(board1);
+        board1.setUser(user1);
+
+        // when
+        Board findBoard = boardRepository.findAll().get(0);
+        boardRepository.deleteById(findBoard.getId());
+
+        //then
+        List<Board> boards = boardRepository.findAll();
+        assertThat(boards.size()).isZero();
+    }
+
 }
