@@ -113,4 +113,32 @@ class BoardRepositoryTest {
         assertThat(boards.size()).isZero();
     }
 
+    @Test
+    void getBoardById(){
+        // given
+        Board board1 = new Board();
+        board1.setTitle("Title1");
+        board1.setAuthor("User1");
+        board1.setContent("Update1");
+        board1.setUser(user1);
+        boardRepository.save(board1);
+
+        // given
+        Board board2 = new Board();
+        board2.setTitle("Title2");
+        board2.setAuthor("User2");
+        board2.setContent("Update2");
+        board2.setUser(user1);
+        boardRepository.save(board2);
+
+        // when
+        Long findId = boardRepository.findAll().get(0).getId();
+
+        //then
+        List<Board> boards = user1.getBoards();
+        assertThat(boards.size()).isEqualTo(2);
+        assertThat(boards.get(0).getTitle()).isEqualTo(board2.getTitle());
+        
+    }
+
 }
