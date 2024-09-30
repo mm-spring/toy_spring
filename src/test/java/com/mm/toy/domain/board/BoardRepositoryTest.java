@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,6 +68,30 @@ class BoardRepositoryTest {
         List<Board> boards = boardRepository.findAll();
         assertThat(boards.size()).isOne();
         assertThat(boards.get(0).getUser()).isEqualTo(user1);
+    }
+
+    @Test
+    void updateBoard(){
+        // given
+        Board board1 = new Board();
+        board1.setTitle("Title1");
+        board1.setAuthor("User1");
+        board1.setContent("Update1");
+        boardRepository.save(board1);
+        board1.setUser(user1);
+
+        String convertedTitle = "convertedTitle";
+        String convertedContent = "convertedContent";
+
+        // when
+        board1.setTitle(convertedTitle);
+        board1.setContent(convertedContent);
+
+        // then
+        Optional<Board> optionalBoard = boardRepository.findById(board1.getId());
+        assertThat(optionalBoard).isPresent();
+        assertThat(optionalBoard.get().getTitle()).isEqualTo(convertedTitle);
+        assertThat(optionalBoard.get().getContent()).isEqualTo(convertedContent);
     }
 
 }
