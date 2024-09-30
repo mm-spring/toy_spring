@@ -64,6 +64,8 @@ class BoardRepositoryTest {
                 .imgUrl("imgUrl1")
                 .build();
 
+        user1.addBoard(board1);
+
         // when
         boardRepository.save(board1);
 
@@ -83,6 +85,8 @@ class BoardRepositoryTest {
                 .author("author1")
                 .imgUrl("imgUrl1")
                 .build();
+
+        user1.addBoard(board1);
 
         boardRepository.save(board1);
 
@@ -110,6 +114,8 @@ class BoardRepositoryTest {
                 .author("author1")
                 .imgUrl("imgUrl1")
                 .build();
+
+        user1.addBoard(board1);
 
         boardRepository.save(board1);
 
