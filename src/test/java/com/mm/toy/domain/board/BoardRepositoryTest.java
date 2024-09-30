@@ -5,12 +5,14 @@ import com.mm.toy.domain.user.UserRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -32,7 +34,7 @@ class BoardRepositoryTest {
         user1 = User.builder()
                 .username("username1")
                 .password("password1")
-                .email("eamil1")
+                .email("email1")
                 .name("name1")
                 .build();
 
@@ -48,6 +50,23 @@ class BoardRepositoryTest {
     @AfterEach
     void cleanUp() {
         databaseCleanup.truncateAllEntity();
+    }
+
+    @Test
+    void createBoard(){
+        // given
+        Board board1 = new Board();
+        board1.setTitle("Title1");
+        board1.setAuthor("User1");
+        boardRepository.save(board1);
+
+        // when
+        board1.setUser(user1);
+
+        //then
+        List<Board> boards = boardRepository.findAll();
+        assertThat(boards.size()).isOne();
+        assertThat(boards.get(0).getUser()).isEqualTo(user1);
     }
 
 }
