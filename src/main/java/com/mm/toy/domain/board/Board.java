@@ -38,4 +38,9 @@ public class Board {
         this.content = updateContent;
     }
 
+    void updateTitleAndContent(String updateTitle, String updateContent){
+        this.title = updateTitle;
+        this.content = updateContent;
+    }
+
 }
