@@ -224,9 +224,10 @@ class BoardRepositoryTest {
         String givenTitle = "title1";
 
         // when
+        List<Board> boards = boardRepository.findByTitle(givenTitle);
 
         //then
-        List<Board> boards = boardRepository.findByTitle(givenTitle);
+
         assertThat(boards.size()).isEqualTo(2);
 
     }
