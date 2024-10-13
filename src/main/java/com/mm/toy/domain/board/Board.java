@@ -3,12 +3,14 @@ package com.mm.toy.domain.board;
 
 import com.mm.toy.domain.user.User;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
 @Entity
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "boards")
 public class Board {
 
     @ManyToOne
@@ -27,5 +29,18 @@ public class Board {
     private String author;
 
     private String imgUrl;
+
+    void updateTitle(String updateTitle){
+        this.title = updateTitle;
+    }
+
+    void updateContent(String updateContent){
+        this.content = updateContent;
+    }
+
+    void update(BoardDTO boardDTO) {
+        this.title = boardDTO.getTitle();
+        this.content = boardDTO.getContent();
+    }
 
 }

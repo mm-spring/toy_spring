@@ -20,6 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
@@ -35,6 +36,10 @@ public class User {
 
     void updatePassword(String updatePassword){
         this.password = updatePassword;
+    }
+
+    public void addBoard(Board board){
+        this.boards.add(board);
     }
 
 }
