@@ -106,6 +106,36 @@ class BoardRepositoryTest {
     }
 
     @Test
+    void updateBoard2() { // DTO
+        // given
+        Board board1 = Board.builder()
+                .user(user1)
+                .title("title1")
+                .content("content1")
+                .author("author1")
+                .imgUrl("imgUrl1")
+                .build();
+
+        user1.addBoard(board1);
+
+        boardRepository.save(board1);
+
+        String convertedTitle = "convertedTitle";
+        String convertedContent = "convertedContent";
+
+        // when
+        BoardDTO boardDTO = new BoardDTO(convertedTitle, convertedContent);
+        board1.update(boardDTO);
+
+        // then
+        Optional<Board> optionalBoard = boardRepository.findById(board1.getId());
+        assertThat(optionalBoard).isPresent();
+        assertThat(optionalBoard.get().getTitle()).isEqualTo(convertedTitle);
+        assertThat(optionalBoard.get().getContent()).isEqualTo(convertedContent);
+
+    }
+
+    @Test
     void deleteBoard(){
         // given
         Board board1 = Board.builder()
