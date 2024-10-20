@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Member;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -38,5 +40,9 @@ public class UserService {
                 .build();
 
 
+    }
+
+    public List<User> getAllUser(){
+        return userRepository.findAll();
     }
 }
