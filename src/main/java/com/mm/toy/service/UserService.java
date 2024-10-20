@@ -1,7 +1,7 @@
 package com.mm.toy.service;
 
 import com.mm.toy.domain.user.User;
-import com.mm.toy.domain.user.UserDTO;
+import com.mm.toy.domain.user.UserDto;
 import com.mm.toy.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Transactional
-    public Long registerUser(UserDTO UserRegisterDTO){
+    public Long registerUser(UserDto UserRegisterDTO){
         Random random = new Random();
 
         User user = User.builder()
@@ -28,5 +28,15 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         return savedUser.getId();
+    }
+
+    @Transactional
+    public Long updateUserInfo(UserDto UserUpdateDto, Long user_id){
+        User user = User.builder()
+                .email(UserUpdateDto.getEmail())
+                .name(UserUpdateDto.getName())
+                .build();
+
+
     }
 }
