@@ -48,6 +48,10 @@ public class BoardService {
         return boardRepository.findByUser_Id(userService.getUserInfoByUsername(username).getId());
     }
 
+    public Board getBoardById(Long board_id){
+        return boardRepository.findById(board_id).get();
+    }
+
 
 
 }
