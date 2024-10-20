@@ -42,4 +42,9 @@ public class User {
         this.boards.add(board);
     }
 
+    public void updateUserInfo(UserUpdateDto userUpdateDto){
+        this.email = userUpdateDto.getEmail();
+        this.name = userUpdateDto.getName();
+    }
+
 }

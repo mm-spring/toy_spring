@@ -3,6 +3,7 @@ package com.mm.toy.service;
 import com.mm.toy.domain.user.User;
 import com.mm.toy.domain.user.UserDto;
 import com.mm.toy.domain.user.UserRepository;
+import com.mm.toy.domain.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +34,10 @@ public class UserService {
     }
 
     @Transactional
-    public Long updateUserInfo(UserDto UserUpdateDto, Long user_id){
-        User user = User.builder()
-                .email(UserUpdateDto.getEmail())
-                .name(UserUpdateDto.getName())
-                .build();
-
-
+    public Long updateUserInfo(UserUpdateDto userUpdateDto, Long user_id){
+        User user = userRepository.findById(user_id).get();
+        user.updateUserInfo(userUpdateDto);
+        return user.getId();
     }
 
     public List<User> getAllUser(){
