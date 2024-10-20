@@ -10,12 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -124,7 +122,7 @@ class BoardRepositoryTest {
         String convertedContent = "convertedContent";
 
         // when
-        BoardDTO boardDTO = new BoardDTO(convertedTitle, convertedContent);
+        BoardDto boardDTO = new BoardDto(convertedTitle, convertedContent);
         board1.update(boardDTO);
 
         // then

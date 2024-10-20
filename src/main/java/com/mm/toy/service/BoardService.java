@@ -27,4 +27,13 @@ public class BoardService {
         return savedBoard.getId();
     }
 
+    @Transactional
+    public Long editBoard(String username, Long board_id, BoardRequestDto boardRequestDto){
+        User user = userService.getUserInfoByUsername(username);
+        Board board = boardRepository.findById(board_id).get();
+        if (board.getUser() == user){
+            board.update(boardRequestDto);
+        }
+    }
+
 }

@@ -38,9 +38,9 @@ public class Board {
         this.content = updateContent;
     }
 
-    void update(BoardDTO boardDTO) {
-        this.title = boardDTO.getTitle();
-        this.content = boardDTO.getContent();
+    public void update(BoardRequestDto boardRequestDto) {
+        this.title = boardRequestDto.getTitle();
+        this.content = boardRequestDto.getContent();
     }
 
 }

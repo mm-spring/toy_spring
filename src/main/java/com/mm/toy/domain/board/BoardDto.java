@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDTO {
+public class BoardDto {
     private String title;
     private String content;
 }
