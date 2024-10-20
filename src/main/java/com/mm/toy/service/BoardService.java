@@ -44,6 +44,10 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    public List<Board> getBoardsByUsername(String username){
+        return boardRepository.findByUser_Id(userService.getUserInfoByUsername(username).getId());
+    }
+
 
 
 }
