@@ -40,14 +40,17 @@ public class BoardService {
         return board.getId();
     }
 
+    @Transactional(readOnly = true)
     public List<Board> getAllBoards(){
         return boardRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
         return boardRepository.findByUser_Id(userService.getUserInfoByUsername(username).getId());
     }
 
+    @Transactional(readOnly = true)
     public Board getBoardById(Long board_id){
         return boardRepository.findById(board_id).get();
     }

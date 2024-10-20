@@ -24,6 +24,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
+    @Column(unique = true)
     private String username;
 
     private String password;

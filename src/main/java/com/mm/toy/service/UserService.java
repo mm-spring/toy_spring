@@ -40,14 +40,17 @@ public class UserService {
         return user.getId();
     }
 
+    @Transactional(readOnly = true)
     public List<User> getAllUser(){
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public User getUserInfoById(Long member_id){
         return userRepository.findById(member_id).get();
     }
 
+    @Transactional(readOnly = true)
     public User getUserInfoByUsername(String username){
         return userRepository.findByUsername(username).get();
     }
