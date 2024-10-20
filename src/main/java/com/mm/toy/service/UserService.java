@@ -45,4 +45,10 @@ public class UserService {
     public List<User> getAllUser(){
         return userRepository.findAll();
     }
+
+    public User getUserInfoById(Long member_id){
+        return userRepository.findById(member_id).get();
+    }
+
+
 }
