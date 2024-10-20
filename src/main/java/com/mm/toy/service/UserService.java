@@ -50,5 +50,9 @@ public class UserService {
         return userRepository.findById(member_id).get();
     }
 
+    public User getUserInfoByUsername(String username){
+        return userRepository.findByUsername(username).get();
+    }
+
 
 }
