@@ -1,5 +1,8 @@
 package com.mm.toy.service;
 
+import com.mm.toy.domain.board.Board;
+import com.mm.toy.domain.board.BoardRepository;
+import com.mm.toy.domain.board.BoardRequestDto;
 import com.mm.toy.domain.user.UserRegisterDto;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
@@ -7,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -17,6 +22,8 @@ class BoardServiceTest {
     BoardService boardService;
     @Autowired
     DatabaseCleanup databaseCleanup;
+    @Autowired
+    BoardRepository boardRepository;
 
     Long user1_id;
     Long user2_id;
@@ -44,6 +51,18 @@ class BoardServiceTest {
 
     @Test
     void writeBoard() {
+        // given
+        BoardRequestDto boardDto = BoardRequestDto.builder()
+                .title("title")
+                .content("content")
+                .build();
+
+        // when
+        Long board_id = boardService.writeBoard("username", boardDto);
+
+        // then
+        Board findBoard = boardRepository.findById(board_id).get();
+        assertThat(findBoard.getContent()).isEqualTo(boardDto.getContent());
     }
 
     @Test
