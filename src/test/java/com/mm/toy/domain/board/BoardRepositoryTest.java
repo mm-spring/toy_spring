@@ -122,7 +122,7 @@ class BoardRepositoryTest {
         String convertedContent = "convertedContent";
 
         // when
-        BoardDto boardDTO = new BoardDto(convertedTitle, convertedContent);
+        BoardRequestDto boardDTO = new BoardRequestDto(convertedTitle, convertedContent);
         board1.update(boardDTO);
 
         // then
