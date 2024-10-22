@@ -81,6 +81,33 @@ class UserServiceTest {
     }
 
     @Test
+    void notUpdateUserInfo(){
+        // given
+        UserDto registerDto = UserDto.builder()
+                .password("password")
+                .email("email")
+                .name("name")
+                .build();
+
+        Long user_id = userService.registerUser(registerDto);
+        UserUpdateDto updateDto = UserUpdateDto.builder()
+                .email("newEmail")
+                .name("newName")
+                .build();
+
+        Optional<User> optionalUser = userRepository.findById(user_id);
+
+        // when
+        optionalUser.get().updateUserInfo(updateDto);
+
+        // then
+        User findUser = userRepository.findById(user_id).get();
+        assertThat(findUser.getEmail()).isNotEqualTo(optionalUser.get().getEmail());
+        userRepository.flush();
+        //Q1-1, Q1-2
+    }
+
+    @Test
     void getAllUser() {
     }
 
