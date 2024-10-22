@@ -25,23 +25,26 @@ class BoardServiceTest {
     @Autowired
     BoardRepository boardRepository;
 
-    Long user1_id;
-    Long user2_id;
+    String user1_username;
+    String user2_username;
 
     @BeforeEach
     void setUp(){
-        UserRegisterDto userRegisterDto1 = UserRegisterDto.builder()
+        UserRegisterDto userDto1 = UserRegisterDto.builder()
                 .password("password_1")
                 .email("email_1")
                 .name("name_1")
                 .build();
-        UserRegisterDto userRegisterDto2 = UserRegisterDto.builder()
+        UserRegisterDto userDto2 = UserRegisterDto.builder()
                 .password("password_2")
                 .email("email_2")
                 .name("name_2")
                 .build();
-        user1_id = userService.registerUser(userRegisterDto1);
-        user2_id = userService.registerUser(userRegisterDto2);
+        Long user1_id = userService.registerUser(userDto1);
+        Long user2_id = userService.registerUser(userDto2);
+
+        user1_username = userService.getUserInfoById(user1_id).getUsername();
+        user2_username = userService.getUserInfoById(user2_id).getUsername();
     }
 
     @AfterEach
@@ -58,7 +61,7 @@ class BoardServiceTest {
                 .build();
 
         // when
-        Long board_id = boardService.writeBoard("username", boardDto);
+        Long board_id = boardService.writeBoard(user1_username, boardDto);
 
         // then
         Board findBoard = boardRepository.findById(board_id).get();

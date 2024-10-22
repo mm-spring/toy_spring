@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    private UserService userService;
+    private final UserService userService;
 
     @Transactional
     public Long writeBoard(String username, BoardRequestDto boardRequestDto){
