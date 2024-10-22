@@ -87,6 +87,25 @@ class BoardServiceTest {
 
     @Test
     void editBoard() {
+        // given
+        BoardRequestDto boardDto = BoardRequestDto.builder()
+                .content("content")
+                .title("title")
+                .build();
+
+        Long board_id = boardService.writeBoard(user1_username, boardDto);
+
+        BoardRequestDto editBoardDto = BoardRequestDto.builder()
+                .content("newContent")
+                .title("newTitle")
+                .build();
+
+        // when
+        Long edit_board_id = boardService.editBoard(user1_username, board_id, editBoardDto);
+
+        // then
+        Board findBoard = boardRepository.findById(edit_board_id).get();
+        assertThat(findBoard.getTitle()).isEqualTo(editBoardDto.getTitle());
     }
 
     @Test

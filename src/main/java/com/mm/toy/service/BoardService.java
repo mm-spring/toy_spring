@@ -18,12 +18,16 @@ public class BoardService {
 
     @Transactional
     public Long writeBoard(String username, BoardRequestDto boardRequestDto){
+        User user = userService.getUserInfoByUsername(username);
+
         Board board = Board.builder()
                 .title(boardRequestDto.getTitle())
                 .content(boardRequestDto.getContent())
+                .user(user)
                 .build();
+
         Board savedBoard = boardRepository.save(board);
-        User user = userService.getUserInfoByUsername(username);
+
         user.addBoard(savedBoard);
         return savedBoard.getId();
     }
@@ -33,7 +37,7 @@ public class BoardService {
         User user = userService.getUserInfoByUsername(username);
         Board board = boardRepository.findById(board_id).get();
 
-        if (board.getUser() == user){
+        if (board.getUser().equals(user)) {
             board.update(boardRequestDto);
         }
 
