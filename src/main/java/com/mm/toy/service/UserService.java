@@ -1,14 +1,13 @@
 package com.mm.toy.service;
 
 import com.mm.toy.domain.user.User;
-import com.mm.toy.domain.user.UserDto;
+import com.mm.toy.domain.user.UserRegisterDto;
 import com.mm.toy.domain.user.UserRepository;
 import com.mm.toy.domain.user.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long registerUser(UserDto UserRegisterDTO){
+    public Long registerUser(UserRegisterDto UserRegisterDTO){
         Random random = new Random();
 
         User user = User.builder()

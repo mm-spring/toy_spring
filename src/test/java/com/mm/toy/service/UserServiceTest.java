@@ -1,11 +1,10 @@
 package com.mm.toy.service;
 
 import com.mm.toy.domain.user.User;
-import com.mm.toy.domain.user.UserDto;
+import com.mm.toy.domain.user.UserRegisterDto;
 import com.mm.toy.domain.user.UserRepository;
 import com.mm.toy.domain.user.UserUpdateDto;
 import com.mm.toy.global.service.DatabaseCleanup;
-import org.hibernate.dialect.Database;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceTest {
@@ -36,19 +34,19 @@ class UserServiceTest {
     @Test
     void registerUser() {
         // given
-        UserDto userDto = UserDto.builder()
+        UserRegisterDto userRegisterDto = UserRegisterDto.builder()
                 .password("password")
                 .email("email")
                 .name("name")
                 .build();
 
         // when
-        Long user_id = userService.registerUser(userDto);
+        Long user_id = userService.registerUser(userRegisterDto);
 
         // then
         Optional<User> user = userRepository.findById(user_id);
         assertThat(user).isPresent();
-        assertThat(user.get().getEmail()).isEqualTo(userDto.getEmail());
+        assertThat(user.get().getEmail()).isEqualTo(userRegisterDto.getEmail());
         assertThat(user.get().getUsername()).isNotNull();
         assertThat(user.get().getUsername()).isGreaterThanOrEqualTo(String.valueOf(6));
     }
@@ -56,7 +54,7 @@ class UserServiceTest {
     @Test
     void updateUserInfo() {
         // given
-        UserDto registerDto = UserDto.builder()
+        UserRegisterDto registerDto = UserRegisterDto.builder()
                 .password("password")
                 .email("email")
                 .name("name")
@@ -84,7 +82,7 @@ class UserServiceTest {
     @Test
     void notUpdateUserInfo(){
         // given
-        UserDto registerDto = UserDto.builder()
+        UserRegisterDto registerDto = UserRegisterDto.builder()
                 .password("password")
                 .email("email")
                 .name("name")
@@ -111,20 +109,20 @@ class UserServiceTest {
     @Test
     void getAllUser() {
         // given
-        UserDto userDto1 = UserDto.builder()
+        UserRegisterDto userRegisterDto1 = UserRegisterDto.builder()
                 .name("name1")
                 .password("password1")
                 .email("email1")
                 .build();
 
-        UserDto userDto2 = UserDto.builder()
+        UserRegisterDto userRegisterDto2 = UserRegisterDto.builder()
                 .name("name2")
                 .password("password2")
                 .email("email2")
                 .build();
 
-        Long user1_id = userService.registerUser(userDto1);
-        Long user2_id = userService.registerUser(userDto2);
+        Long user1_id = userService.registerUser(userRegisterDto1);
+        Long user2_id = userService.registerUser(userRegisterDto2);
 
         // when
         List<User> userList = userService.getAllUser();
@@ -136,38 +134,38 @@ class UserServiceTest {
     @Test
     void getUserInfoById() {
         // given
-        UserDto userDto1 = UserDto.builder()
+        UserRegisterDto userRegisterDto1 = UserRegisterDto.builder()
                 .name("name1")
                 .password("password1")
                 .email("email1")
                 .build();
 
-        UserDto userDto2 = UserDto.builder()
+        UserRegisterDto userRegisterDto2 = UserRegisterDto.builder()
                 .name("name2")
                 .password("password2")
                 .email("email2")
                 .build();
 
-        Long user1_id = userService.registerUser(userDto1);
-        Long user2_id = userService.registerUser(userDto2);
+        Long user1_id = userService.registerUser(userRegisterDto1);
+        Long user2_id = userService.registerUser(userRegisterDto2);
 
         // when
         User findUser = userService.getUserInfoById(user1_id);
 
         // then
-        assertThat(findUser.getEmail()).isEqualTo(userDto1.getEmail());
+        assertThat(findUser.getEmail()).isEqualTo(userRegisterDto1.getEmail());
     }
 
     @Test
     void getUserInfoByUsername() {
         // given
-        UserDto userDto = UserDto.builder()
+        UserRegisterDto userRegisterDto = UserRegisterDto.builder()
                 .name("name")
                 .password("password")
                 .email("email")
                 .build();
 
-        Long user_id = userService.registerUser(userDto);
+        Long user_id = userService.registerUser(userRegisterDto);
         Optional<User> optionalUser = userRepository.findById(user_id);
 
         // when

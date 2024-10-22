@@ -1,14 +1,12 @@
 package com.mm.toy.service;
 
-import com.mm.toy.domain.user.UserDto;
+import com.mm.toy.domain.user.UserRegisterDto;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -25,18 +23,18 @@ class BoardServiceTest {
 
     @BeforeEach
     void setUp(){
-        UserDto userDto1 = UserDto.builder()
+        UserRegisterDto userRegisterDto1 = UserRegisterDto.builder()
                 .password("password_1")
                 .email("email_1")
                 .name("name_1")
                 .build();
-        UserDto userDto2 = UserDto.builder()
+        UserRegisterDto userRegisterDto2 = UserRegisterDto.builder()
                 .password("password_2")
                 .email("email_2")
                 .name("name_2")
                 .build();
-        user1_id = userService.registerUser(userDto1);
-        user2_id = userService.registerUser(userDto2);
+        user1_id = userService.registerUser(userRegisterDto1);
+        user2_id = userService.registerUser(userRegisterDto2);
     }
 
     @AfterEach
