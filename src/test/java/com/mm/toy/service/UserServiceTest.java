@@ -160,5 +160,21 @@ class UserServiceTest {
 
     @Test
     void getUserInfoByUsername() {
+        // given
+        UserDto userDto = UserDto.builder()
+                .name("name")
+                .password("password")
+                .email("email")
+                .build();
+
+        Long user_id = userService.registerUser(userDto);
+        Optional<User> optionalUser = userRepository.findById(user_id);
+
+        // when
+        User findUser = userService.getUserInfoByUsername(optionalUser.get().getUsername());
+
+        // then
+        assertThat(findUser.getUsername()).isEqualTo(optionalUser.get().getUsername());
+        assertThat(findUser).isEqualTo(optionalUser.get());
     }
 }
