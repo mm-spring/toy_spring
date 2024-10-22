@@ -67,8 +67,6 @@ class UserServiceTest {
                 .name("newName")
                 .build();
 
-        Optional<User> optionalUser = userRepository.findById(user_id);
-
         // when
         Long update_user_id = userService.updateUserInfo(updateDto, user_id);
 
