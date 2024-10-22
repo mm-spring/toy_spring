@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -143,6 +145,25 @@ class BoardServiceTest {
 
     @Test
     void getAllBoards() {
+        // given
+        BoardRequestDto boardRequestDto1 = BoardRequestDto.builder()
+                .title("title1")
+                .content("content1")
+                .build();
+
+        BoardRequestDto boardRequestDto2 = BoardRequestDto.builder()
+                .title("title2")
+                .content("content2")
+                .build();
+
+        boardService.writeBoard(user1_username, boardRequestDto1);
+        boardService.writeBoard(user2_username, boardRequestDto2);
+
+        // when
+        List<Board> boardList = boardService.getAllBoards();
+
+        // then
+        assertThat(boardList.size()).isEqualTo(2);
     }
 
     @Test
