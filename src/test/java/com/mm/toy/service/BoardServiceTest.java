@@ -69,6 +69,23 @@ class BoardServiceTest {
     }
 
     @Test
+    void errorWhenWriteBoard(){
+        // given
+        BoardRequestDto boardDto = BoardRequestDto.builder()
+                .title("title")
+                .content("content")
+                .build();
+
+        // when
+        Long board_id = boardService.writeBoard(user1_username, boardDto);
+
+        // then
+        Board findBoard = boardRepository.findById(board_id).get();
+        //findBoard.getUser().isEqualTo(user);
+        //Q2-1
+    }
+
+    @Test
     void editBoard() {
     }
 
