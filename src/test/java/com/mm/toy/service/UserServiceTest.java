@@ -135,6 +135,27 @@ class UserServiceTest {
 
     @Test
     void getUserInfoById() {
+        // given
+        UserDto userDto1 = UserDto.builder()
+                .name("name1")
+                .password("password1")
+                .email("email1")
+                .build();
+
+        UserDto userDto2 = UserDto.builder()
+                .name("name2")
+                .password("password2")
+                .email("email2")
+                .build();
+
+        Long user1_id = userService.registerUser(userDto1);
+        Long user2_id = userService.registerUser(userDto2);
+
+        // when
+        User findUser = userService.getUserInfoById(user1_id);
+
+        // then
+        assertThat(findUser.getEmail()).isEqualTo(userDto1.getEmail());
     }
 
     @Test
