@@ -15,7 +15,7 @@ import java.util.Random;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long registerUser(UserDto UserRegisterDTO){

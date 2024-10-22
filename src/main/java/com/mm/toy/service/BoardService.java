@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-    private BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
     private UserService userService;
 
     @Transactional
