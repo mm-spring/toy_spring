@@ -191,5 +191,24 @@ class BoardServiceTest {
 
     @Test
     void getBoardById() {
+        // given
+        BoardRequestDto boardRequestDto1 = BoardRequestDto.builder()
+                .title("title1")
+                .content("content1")
+                .build();
+
+        BoardRequestDto boardRequestDto2 = BoardRequestDto.builder()
+                .title("title2")
+                .content("content2")
+                .build();
+
+        Long board_id1 = boardService.writeBoard(user1_username, boardRequestDto1);
+        Long board_id2 = boardService.writeBoard(user2_username, boardRequestDto2);
+
+        // when
+        Board findBoard = boardService.getBoardById(board_id1);
+
+        // then
+        assertThat(findBoard.getId()).isEqualTo(board_id1);
     }
 }
