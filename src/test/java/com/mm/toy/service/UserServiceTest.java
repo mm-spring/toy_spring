@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -109,6 +110,27 @@ class UserServiceTest {
 
     @Test
     void getAllUser() {
+        // given
+        UserDto userDto1 = UserDto.builder()
+                .name("name1")
+                .password("password1")
+                .email("email1")
+                .build();
+
+        UserDto userDto2 = UserDto.builder()
+                .name("name2")
+                .password("password2")
+                .email("email2")
+                .build();
+
+        Long user1_id = userService.registerUser(userDto1);
+        Long user2_id = userService.registerUser(userDto2);
+
+        // when
+        List<User> userList = userService.getAllUser();
+
+        // then
+        assertThat(userList.size()).isEqualTo(2);
     }
 
     @Test
