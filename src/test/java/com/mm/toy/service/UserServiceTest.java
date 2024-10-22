@@ -48,7 +48,7 @@ class UserServiceTest {
         assertThat(user).isPresent();
         assertThat(user.get().getEmail()).isEqualTo(userDto.getEmail());
         assertThat(user.get().getUsername()).isNotNull();
-        assertThat(user.get().getUsername()).isGreaterThanOrEqualTo(6);
+        assertThat(user.get().getUsername()).isGreaterThanOrEqualTo(String.valueOf(6));
     }
 
     @Test
