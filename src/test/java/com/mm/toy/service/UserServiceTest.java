@@ -3,6 +3,7 @@ package com.mm.toy.service;
 import com.mm.toy.domain.user.User;
 import com.mm.toy.domain.user.UserDto;
 import com.mm.toy.domain.user.UserRepository;
+import com.mm.toy.domain.user.UserUpdateDto;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.hibernate.dialect.Database;
 import org.junit.jupiter.api.AfterEach;
@@ -53,6 +54,30 @@ class UserServiceTest {
 
     @Test
     void updateUserInfo() {
+        // given
+        UserDto registerDto = UserDto.builder()
+                .password("password")
+                .email("email")
+                .name("name")
+                .build();
+
+        Long user_id = userService.registerUser(registerDto);
+
+        UserUpdateDto updateDto = UserUpdateDto.builder()
+                .email("newEmail")
+                .name("newName")
+                .build();
+
+        Optional<User> optionalUser = userRepository.findById(user_id);
+
+        // when
+        Long update_user_id = userService.updateUserInfo(updateDto, user_id);
+
+        // then
+        Optional<User> user = userRepository.findById(user_id);
+        assertThat(user).isPresent();
+        assertThat(user.get().getEmail()).isEqualTo(updateDto.getEmail());
+        assertThat(user.get().getName()).isEqualTo(updateDto.getName());
     }
 
     @Test
