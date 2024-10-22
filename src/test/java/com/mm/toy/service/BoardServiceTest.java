@@ -3,7 +3,9 @@ package com.mm.toy.service;
 import com.mm.toy.domain.board.Board;
 import com.mm.toy.domain.board.BoardRepository;
 import com.mm.toy.domain.board.BoardRequestDto;
+import com.mm.toy.domain.user.User;
 import com.mm.toy.domain.user.UserRegisterDto;
+import com.mm.toy.domain.user.UserRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +26,14 @@ class BoardServiceTest {
     DatabaseCleanup databaseCleanup;
     @Autowired
     BoardRepository boardRepository;
+    @Autowired
+    UserRepository userRepository;
 
     String user1_username;
     String user2_username;
+
+    Long user1_id;
+    Long user2_id;
 
     @BeforeEach
     void setUp(){
@@ -106,6 +113,32 @@ class BoardServiceTest {
         // then
         Board findBoard = boardRepository.findById(edit_board_id).get();
         assertThat(findBoard.getTitle()).isEqualTo(editBoardDto.getTitle());
+    }
+
+    @Test
+    void errorWhenEditBoard(){
+        // given
+        BoardRequestDto boardDto = BoardRequestDto.builder()
+                .content("content")
+                .title("title")
+                .build();
+
+        Long board_id = boardService.writeBoard(user1_username, boardDto);
+
+        BoardRequestDto editBoardDto = BoardRequestDto.builder()
+                .content("newContent")
+                .title("newTitle")
+                .build();
+
+        // when
+        Long edit_board_id = boardService.editBoard(user1_username, board_id, editBoardDto);
+
+        // then
+        Board findBoard = boardRepository.findById(edit_board_id).get();
+        User findUser = userRepository.findById(user1_id).get();
+        assertThat(findBoard.getTitle()).isEqualTo(editBoardDto.getTitle());
+        assertThat(findBoard.getUser()).isEqualTo(findUser);
+        //Q3-1
     }
 
     @Test
