@@ -19,7 +19,6 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@Transactional
 class BoardServiceTest {
 
     @Autowired
@@ -81,6 +80,7 @@ class BoardServiceTest {
     }
 
     @Test
+    @Transactional
     void errorWhenWriteBoard(){
         // given
         BoardRequestDto boardDto = BoardRequestDto.builder()
@@ -93,7 +93,8 @@ class BoardServiceTest {
 
         // then
         Board findBoard = boardRepository.findById(board_id).get();
-        //findBoard.getUser().isEqualTo(user);
+        User user = userService.getUserInfoById(user1_id);
+        assertThat(findBoard.getUser()).isEqualTo(user);
         //Q2-1
     }
 
@@ -121,6 +122,7 @@ class BoardServiceTest {
     }
 
     @Test
+    @Transactional
     void errorWhenEditBoard(){
         // given
         BoardRequestDto boardDto = BoardRequestDto.builder()
