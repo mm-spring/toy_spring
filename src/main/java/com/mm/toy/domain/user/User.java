@@ -24,6 +24,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
+    @Column(unique = true)
     private String username;
 
     private String password;
@@ -40,6 +41,11 @@ public class User {
 
     public void addBoard(Board board){
         this.boards.add(board);
+    }
+
+    public void updateUserInfo(UserUpdateDto userUpdateDto){
+        this.email = userUpdateDto.getEmail();
+        this.name = userUpdateDto.getName();
     }
 
 }
