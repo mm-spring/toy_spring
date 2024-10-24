@@ -17,7 +17,6 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@Transactional
 class UserServiceTest {
     @Autowired
     UserService userService;
@@ -157,6 +156,7 @@ class UserServiceTest {
     }
 
     @Test
+    @Transactional
     void getUserInfoByUsername() {
         // given
         UserRegisterDto userRegisterDto = UserRegisterDto.builder()
