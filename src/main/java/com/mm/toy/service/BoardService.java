@@ -4,6 +4,7 @@ import com.mm.toy.domain.board.Entity.Board;
 import com.mm.toy.domain.board.Repository.BoardRepository;
 import com.mm.toy.domain.board.Dto.BoardRequestDto;
 import com.mm.toy.domain.user.Entity.User;
+import com.mm.toy.domain.user.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long writeBoard(String username, BoardRequestDto boardRequestDto){
-        User user = userService.getUserInfoByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
         Board board = Board.builder()
                 .title(boardRequestDto.getTitle())
@@ -34,7 +36,8 @@ public class BoardService {
 
     @Transactional
     public Long editBoard(String username, Long board_id, BoardRequestDto boardRequestDto){
-        User user = userService.getUserInfoByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
         Board board = boardRepository.findById(board_id).get();
 
         if (board.getUser().equals(user)) {
@@ -51,7 +54,10 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
-        return boardRepository.findByUser_Id(userService.getUserInfoByUsername(username).getId());
+        return boardRepository.findByUser_Id(
+                userRepository.findByUsername(username)
+                        .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"))
+                        .getId());
     }
 
     @Transactional(readOnly = true)
