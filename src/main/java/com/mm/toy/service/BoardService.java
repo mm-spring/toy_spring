@@ -1,9 +1,9 @@
 package com.mm.toy.service;
 
-import com.mm.toy.domain.board.Board;
-import com.mm.toy.domain.board.BoardRepository;
-import com.mm.toy.domain.board.BoardRequestDto;
-import com.mm.toy.domain.user.User;
+import com.mm.toy.domain.board.Entity.Board;
+import com.mm.toy.domain.board.Repository.BoardRepository;
+import com.mm.toy.domain.board.Dto.BoardRequestDto;
+import com.mm.toy.domain.user.Entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

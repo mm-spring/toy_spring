@@ -1,7 +1,10 @@
 package com.mm.toy.domain.board;
 
-import com.mm.toy.domain.user.User;
-import com.mm.toy.domain.user.UserRepository;
+import com.mm.toy.domain.board.Dto.BoardRequestDto;
+import com.mm.toy.domain.board.Entity.Board;
+import com.mm.toy.domain.board.Repository.BoardRepository;
+import com.mm.toy.domain.user.Entity.User;
+import com.mm.toy.domain.user.Repository.UserRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

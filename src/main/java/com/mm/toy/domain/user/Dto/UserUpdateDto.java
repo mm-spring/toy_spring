@@ -1,4 +1,4 @@
-package com.mm.toy.domain.user;
+package com.mm.toy.domain.user.Dto;
 
 import lombok.*;
 
