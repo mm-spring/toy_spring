@@ -31,11 +31,11 @@ public class Board {
 
     private String imgUrl;
 
-    void updateTitle(String updateTitle){
+    public void updateTitle(String updateTitle){
         this.title = updateTitle;
     }
 
-    void updateContent(String updateContent){
+    public void updateContent(String updateContent){
         this.content = updateContent;
     }
 
