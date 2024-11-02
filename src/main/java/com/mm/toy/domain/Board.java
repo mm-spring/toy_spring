@@ -54,4 +54,5 @@ public class Board {
 
     public void addComment(Comment comment){ this.comments.add(comment); }
 
+    public void addLike(Like like){this.likes.add(like);}
 }
