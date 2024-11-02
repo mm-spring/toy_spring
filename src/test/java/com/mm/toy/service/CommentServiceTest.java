@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
 class CommentServiceTest{
@@ -93,5 +94,27 @@ class CommentServiceTest{
         Comment comment = comments.get(0);
         assertThat(comment.getBoard().getId()).isEqualTo(board1_id);
         assertThat(comment.getUser().getUsername()).isEqualTo(user2_username);
+    }
+
+    @Test
+    void notFoundBoardWhenWriteComment(){
+        // given
+        String content = "Content";
+
+        // when & then
+        assertThatThrownBy(() -> commentService.writeComment(user1_username, 1000L, content))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Board not found");
+    }
+
+    @Test
+    void notFoundWriterWhenWriteComment(){
+        // given
+        String content = "Content";
+
+        // when & then
+        assertThatThrownBy(() -> commentService.writeComment("username", board1_id, content))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("User not found");
     }
 }
