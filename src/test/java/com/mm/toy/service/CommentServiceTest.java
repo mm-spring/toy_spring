@@ -2,12 +2,19 @@ package com.mm.toy.service;
 
 import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.domain.Comment;
 import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 class CommentServiceTest{
@@ -70,5 +77,21 @@ class CommentServiceTest{
     @AfterEach
     void cleanUp() {
         databaseCleanup.truncateAllEntity();
+    }
+
+    @Test
+    void writeComment(){
+        // given
+        String content = "Content";
+
+        // when
+        Long comment_id = commentService.writeComment(user2_username, board1_id, content);
+
+        // then
+        List<Comment> comments = commentRepository.findAll();
+        assertThat(comments.size()).isOne();
+        Comment comment = comments.get(0);
+        assertThat(comment.getBoard().getId()).isEqualTo(board1_id);
+        assertThat(comment.getUser().getUsername()).isEqualTo(user2_username);
     }
 }

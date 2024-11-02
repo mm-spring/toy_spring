@@ -29,6 +29,8 @@ public class CommentService {
 
         Comment comment = Comment.builder()
                 .content(content)
+                .board(board)
+                .user(user)
                 .build();
 
         Comment savedComment = commentRepository.save(comment);

@@ -20,9 +20,11 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder.Default
     @OneToMany(mappedBy = "board")
     private List<Comment> comments = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "board")
     private List<Like> likes = new ArrayList<>();
 
