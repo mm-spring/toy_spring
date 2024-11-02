@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -66,5 +68,10 @@ public class CommentService {
             throw new RuntimeException("Only writer can edit");
         }
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<Comment> getCommentsByBoard(Long board_id){
+        return boardRepository.findById(board_id).get().getComments();
     }
 }
