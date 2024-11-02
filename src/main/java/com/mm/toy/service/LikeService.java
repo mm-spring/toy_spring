@@ -49,7 +49,7 @@ public class LikeService {
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new RuntimeException("Board not found"));
 
-        Optional<Like> foundLike = likeRepository.findByBoardAndUser(board, user)
+        Optional<Like> foundLike = likeRepository.findByBoardAndUser(board, user);
 
         if (foundLike.isPresent()){
             likeRepository.delete(foundLike.get());
@@ -59,4 +59,11 @@ public class LikeService {
             throw new RuntimeException("Like not found");
         }
     }
+
+    @Transactional(readOnly = true)
+    public int countLike(Long board_id){
+        return boardRepository.findById(board_id).get().getLikes().size();
+    }
+
+
 }
