@@ -74,4 +74,9 @@ public class CommentService {
     public List<Comment> getCommentsByBoard(Long board_id){
         return boardRepository.findById(board_id).get().getComments();
     }
+
+    @Transactional(readOnly = true)
+    public List<Comment> getCommentsByUser(String username){
+        return userRepository.findByUsername(username).get().getComments();
+    }
 }
