@@ -20,13 +20,13 @@ public class LikeService {
     private final LikeRepository likeRepository;
 
     @Transactional
-    public Long likeBoard(String username, Long board_id){
+    public Long likeBoard(String username, Long board_id) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new RuntimeException("Board not found"));
 
-        if (likeRepository.findByBoardAndUser(board, user).isPresent()){
+        if (likeRepository.findByBoardAndUser(board, user).isPresent()) {
             throw new RuntimeException("Already liked it");
         }
 
@@ -43,7 +43,7 @@ public class LikeService {
     }
 
     @Transactional
-    public void unlikeBoard(String username, Long board_id){
+    public void unlikeBoard(String username, Long board_id) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Board board = boardRepository.findById(board_id)
@@ -51,19 +51,20 @@ public class LikeService {
 
         Optional<Like> foundLike = likeRepository.findByBoardAndUser(board, user);
 
-        if (foundLike.isPresent()){
+        if (foundLike.isPresent()) {
             likeRepository.delete(foundLike.get());
-        }
-
-        else{
+        } else {
             throw new RuntimeException("Like not found");
         }
     }
 
     @Transactional(readOnly = true)
-    public int countLike(Long board_id){
+    public int countLike(Long board_id) {
         return boardRepository.findById(board_id).get().getLikes().size();
     }
 
-
+    @Transactional(readOnly = true)
+    public Boolean isLiked(String username, Long board_id){
+        return likeRepository.findByBoardAndUser(boardRepository.findById(board_id).get(), userRepository.findByUsername(username).get()).isPresent();
+    }
 }
