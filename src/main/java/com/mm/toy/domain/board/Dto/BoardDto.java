@@ -1,4 +1,4 @@
-package com.mm.toy.domain.board;
+package com.mm.toy.domain.board.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDTO {
+public class BoardDto {
     private String title;
     private String content;
 }

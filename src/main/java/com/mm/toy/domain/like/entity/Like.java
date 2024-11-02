@@ -1,4 +1,4 @@
-package com.mm.toy.domain.like;
+package com.mm.toy.domain.like.entity;
 
 import com.mm.toy.domain.board.Board;
 import com.mm.toy.domain.user.User;

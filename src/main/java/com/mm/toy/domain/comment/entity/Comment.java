@@ -1,4 +1,4 @@
-package com.mm.toy.domain.comment;
+package com.mm.toy.domain.comment.entity;
 
 import com.mm.toy.domain.board.Board;
 import com.mm.toy.domain.user.User;

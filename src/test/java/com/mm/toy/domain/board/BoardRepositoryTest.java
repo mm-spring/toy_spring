@@ -1,7 +1,10 @@
 package com.mm.toy.domain.board;
 
-import com.mm.toy.domain.user.User;
-import com.mm.toy.domain.user.UserRepository;
+import com.mm.toy.domain.board.Dto.BoardRequestDto;
+import com.mm.toy.domain.board.Entity.Board;
+import com.mm.toy.domain.board.Repository.BoardRepository;
+import com.mm.toy.domain.user.Entity.User;
+import com.mm.toy.domain.user.Repository.UserRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -124,7 +125,7 @@ class BoardRepositoryTest {
         String convertedContent = "convertedContent";
 
         // when
-        BoardDTO boardDTO = new BoardDTO(convertedTitle, convertedContent);
+        BoardRequestDto boardDTO = new BoardRequestDto(convertedTitle, convertedContent);
         board1.update(boardDTO);
 
         // then
