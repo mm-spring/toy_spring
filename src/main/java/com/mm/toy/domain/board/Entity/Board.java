@@ -2,9 +2,14 @@ package com.mm.toy.domain.board.Entity;
 
 
 import com.mm.toy.domain.board.Dto.BoardRequestDto;
+import com.mm.toy.domain.comment.entity.Comment;
+import com.mm.toy.domain.like.entity.Like;
 import com.mm.toy.domain.user.Entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -17,6 +22,12 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board")
+    private List<Like> likes = new ArrayList<>();
 
     @Id
     @Column(name = "board_id")
@@ -31,11 +42,11 @@ public class Board {
 
     private String imgUrl;
 
-    void updateTitle(String updateTitle){
+    public void updateTitle(String updateTitle){
         this.title = updateTitle;
     }
 
-    void updateContent(String updateContent){
+    public void updateContent(String updateContent){
         this.content = updateContent;
     }
 
