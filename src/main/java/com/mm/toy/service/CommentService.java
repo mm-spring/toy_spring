@@ -52,4 +52,19 @@ public class CommentService {
 
         return comment.getId();
     }
+
+    @Transactional
+    public void deleteComment(String username, Long comment_id){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Comment comment = commentRepository.findById(comment_id)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        if (comment.getUser().equals(user)){
+            commentRepository.delete(comment);
+        }
+        else{
+            throw new RuntimeException("Only writer can edit");
+        }
+
+    }
 }
