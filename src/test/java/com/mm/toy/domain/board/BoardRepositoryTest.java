@@ -106,7 +106,7 @@ class BoardRepositoryTest {
     }
 
     @Test
-    void updateBoard2(){
+    void updateBoard2() { // DTO
         // given
         Board board1 = Board.builder()
                 .user(user1)
@@ -124,7 +124,8 @@ class BoardRepositoryTest {
         String convertedContent = "convertedContent";
 
         // when
-        board1.updateTitleAndContent(convertedTitle, convertedContent);
+        BoardDTO boardDTO = new BoardDTO(convertedTitle, convertedContent);
+        board1.update(boardDTO);
 
         // then
         Optional<Board> optionalBoard = boardRepository.findById(board1.getId());

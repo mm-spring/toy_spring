@@ -49,11 +49,10 @@ public class Board {
         this.content = updateContent;
     }
 
-    void updateTitleAndContent(String updateTitle, String updateContent) {
-        this.title = updateTitle;
-        this.content = updateContent;
+
+    void update(BoardDTO boardDTO) {
+        this.title = boardDTO.getTitle();
+        this.content = boardDTO.getContent();
     }
-
-
 
 }
