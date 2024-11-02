@@ -1,7 +1,6 @@
-package com.mm.toy.domain.user.Entity;
+package com.mm.toy.domain;
 
-import com.mm.toy.domain.board.Entity.Board;
-import com.mm.toy.domain.user.Dto.UserUpdateDto;
+import com.mm.toy.Dto.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +24,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Like> likes = new ArrayList<>();
+
     @Column(unique = true)
     private String username;
 
@@ -36,7 +41,7 @@ public class User {
 
     private String name;
 
-    void updatePassword(String updatePassword){
+    public void updatePassword(String updatePassword){
         this.password = updatePassword;
     }
 
@@ -49,4 +54,9 @@ public class User {
         this.name = userUpdateDto.getName();
     }
 
+    public void addComment(Comment comment){ this.comments.add(comment); }
+
+    public void addLike(Like like){this.likes.add(like);}
+
 }
+

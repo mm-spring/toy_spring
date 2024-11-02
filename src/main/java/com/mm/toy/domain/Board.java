@@ -1,10 +1,12 @@
-package com.mm.toy.domain.board.Entity;
+package com.mm.toy.domain;
 
 
-import com.mm.toy.domain.board.Dto.BoardRequestDto;
-import com.mm.toy.domain.user.Entity.User;
+import com.mm.toy.Dto.BoardRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -17,6 +19,12 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board")
+    private List<Like> likes = new ArrayList<>();
 
     @Id
     @Column(name = "board_id")
@@ -44,4 +52,7 @@ public class Board {
         this.content = boardRequestDto.getContent();
     }
 
+    public void addComment(Comment comment){ this.comments.add(comment); }
+
+    public void addLike(Like like){this.likes.add(like);}
 }

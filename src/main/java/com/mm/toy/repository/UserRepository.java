@@ -1,6 +1,6 @@
-package com.mm.toy.domain.user.Repository;
+package com.mm.toy.repository;
 
-import com.mm.toy.domain.user.Entity.User;
+import com.mm.toy.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

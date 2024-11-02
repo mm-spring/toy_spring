@@ -1,10 +1,10 @@
 package com.mm.toy.service;
 
-import com.mm.toy.domain.board.Entity.Board;
-import com.mm.toy.domain.board.Repository.BoardRepository;
-import com.mm.toy.domain.board.Dto.BoardRequestDto;
-import com.mm.toy.domain.user.Entity.User;
-import com.mm.toy.domain.user.Repository.UserRepository;
+import com.mm.toy.domain.Board;
+import com.mm.toy.repository.BoardRepository;
+import com.mm.toy.Dto.BoardRequestDto;
+import com.mm.toy.domain.User;
+import com.mm.toy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,9 +1,9 @@
 package com.mm.toy.service;
 
-import com.mm.toy.domain.user.Entity.User;
-import com.mm.toy.domain.user.Dto.UserRegisterDto;
-import com.mm.toy.domain.user.Repository.UserRepository;
-import com.mm.toy.domain.user.Dto.UserUpdateDto;
+import com.mm.toy.domain.User;
+import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.repository.UserRepository;
+import com.mm.toy.Dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

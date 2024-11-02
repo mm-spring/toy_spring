@@ -1,10 +1,10 @@
 package com.mm.toy.domain.board;
 
-import com.mm.toy.domain.board.Dto.BoardRequestDto;
-import com.mm.toy.domain.board.Entity.Board;
-import com.mm.toy.domain.board.Repository.BoardRepository;
-import com.mm.toy.domain.user.Entity.User;
-import com.mm.toy.domain.user.Repository.UserRepository;
+import com.mm.toy.Dto.BoardRequestDto;
+import com.mm.toy.domain.Board;
+import com.mm.toy.repository.BoardRepository;
+import com.mm.toy.domain.User;
+import com.mm.toy.repository.UserRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -133,7 +133,6 @@ class BoardRepositoryTest {
         assertThat(optionalBoard).isPresent();
         assertThat(optionalBoard.get().getTitle()).isEqualTo(convertedTitle);
         assertThat(optionalBoard.get().getContent()).isEqualTo(convertedContent);
-
     }
 
     @Test
@@ -227,9 +226,10 @@ class BoardRepositoryTest {
         String givenTitle = "title1";
 
         // when
+        List<Board> boards = boardRepository.findByTitle(givenTitle);
 
         //then
-        List<Board> boards = boardRepository.findByTitle(givenTitle);
+
         assertThat(boards.size()).isEqualTo(2);
 
     }
