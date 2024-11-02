@@ -8,6 +8,7 @@ import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     public Long writeComment(String username, Long board_id, String content){
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new RuntimeException("Board not found"));
@@ -32,5 +34,22 @@ public class CommentService {
         user.addComment(comment);
 
         return savedComment.getId();
+    }
+
+    @Transactional
+    public Long updateComment(String username, Long comment_id, String content){
+        Comment comment = commentRepository.findById(comment_id)
+                .orElseThrow(() -> new RuntimeException("Comment not found"));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (comment.getUser().equals(user)){
+            comment.update(content);
+        }
+        else{
+            throw new RuntimeException("Only writer can edit");
+        }
+
+        return comment.getId();
     }
 }

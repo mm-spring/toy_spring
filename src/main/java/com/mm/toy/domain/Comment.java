@@ -30,4 +30,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "board_id")
     private Board board;
+
+    public void update(String content){
+        this.content = content;
+    }
 }
