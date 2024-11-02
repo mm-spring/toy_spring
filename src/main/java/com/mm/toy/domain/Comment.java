@@ -1,7 +1,7 @@
 package com.mm.toy.domain;
 
-import com.mm.toy.domain.board.Board;
-import com.mm.toy.domain.user.User;
+import com.mm.toy.domain.Board;
+import com.mm.toy.domain.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

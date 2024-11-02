@@ -54,5 +54,7 @@ public class User {
         this.name = userUpdateDto.getName();
     }
 
+    public void addComment(Comment comment){ this.comments.add(comment); }
+
 }
 
