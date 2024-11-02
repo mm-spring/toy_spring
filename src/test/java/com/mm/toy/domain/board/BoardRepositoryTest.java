@@ -132,7 +132,6 @@ class BoardRepositoryTest {
         assertThat(optionalBoard).isPresent();
         assertThat(optionalBoard.get().getTitle()).isEqualTo(convertedTitle);
         assertThat(optionalBoard.get().getContent()).isEqualTo(convertedContent);
-
     }
 
     @Test
@@ -226,9 +225,10 @@ class BoardRepositoryTest {
         String givenTitle = "title1";
 
         // when
+        List<Board> boards = boardRepository.findByTitle(givenTitle);
 
         //then
-        List<Board> boards = boardRepository.findByTitle(givenTitle);
+
         assertThat(boards.size()).isEqualTo(2);
 
     }
