@@ -2,6 +2,7 @@ package com.mm.toy.service;
 
 import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
 import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
@@ -116,5 +117,19 @@ class CommentServiceTest{
         assertThatThrownBy(() -> commentService.writeComment("username", board1_id, content))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("User not found");
+    }
+
+    @Test
+    @Transactional
+    void questionOfTransactional_1(){
+        // given
+        String content = "Content";
+
+        // when
+        Long comment_id = commentService.writeComment(user2_username, board1_id, content);
+
+        // then
+        Board findBoard = boardService.getBoardById(board1_id);
+        assertThat(findBoard.getComments().size()).isEqualTo(1);
     }
 }
