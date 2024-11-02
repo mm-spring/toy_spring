@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class LikeService {
@@ -38,5 +40,23 @@ public class LikeService {
         board.addLike(like);
 
         return savedLike.getId();
+    }
+
+    @Transactional
+    public void unlikeBoard(String username, Long board_id){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Board board = boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board not found"));
+
+        Optional<Like> foundLike = likeRepository.findByBoardAndUser(board, user)
+
+        if (foundLike.isPresent()){
+            likeRepository.delete(foundLike.get());
+        }
+
+        else{
+            throw new RuntimeException("Like not found");
+        }
     }
 }
