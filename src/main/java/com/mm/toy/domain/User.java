@@ -1,9 +1,6 @@
-package com.mm.toy.domain.user.Entity;
+package com.mm.toy.domain;
 
-import com.mm.toy.domain.board.Entity.Board;
-import com.mm.toy.domain.comment.entity.Comment;
-import com.mm.toy.domain.like.entity.Like;
-import com.mm.toy.domain.user.Dto.UserUpdateDto;
+import com.mm.toy.Dto.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 

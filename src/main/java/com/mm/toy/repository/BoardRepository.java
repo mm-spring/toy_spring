@@ -1,6 +1,6 @@
-package com.mm.toy.domain.board.Repository;
+package com.mm.toy.repository;
 
-import com.mm.toy.domain.board.Entity.Board;
+import com.mm.toy.domain.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

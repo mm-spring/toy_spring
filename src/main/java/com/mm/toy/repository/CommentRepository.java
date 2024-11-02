@@ -1,6 +1,6 @@
-package com.mm.toy.domain.comment.repository;
+package com.mm.toy.repository;
 
-import com.mm.toy.domain.comment.entity.Comment;
+import com.mm.toy.domain.Comment;
 import jakarta.persistence.Id;
 import org.springframework.data.jpa.repository.JpaRepository;
 

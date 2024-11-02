@@ -1,4 +1,4 @@
-package com.mm.toy.domain.board.Dto;
+package com.mm.toy.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.mm.toy.domain.like.repository;
+package com.mm.toy.repository;
 
-import com.mm.toy.domain.like.entity.Like;
+import com.mm.toy.domain.Like;
 import jakarta.persistence.Id;
 import org.springframework.data.jpa.repository.JpaRepository;
 
