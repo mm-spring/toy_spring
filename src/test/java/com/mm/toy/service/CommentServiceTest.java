@@ -147,4 +147,17 @@ class CommentServiceTest{
         Comment comment = commentRepository.findById(comment_id).get();
         assertThat(comment.getContent()).isEqualTo(editContent);
     }
+
+    @Test
+    void notWriterWhenUpdateComment(){
+        // given
+        String content = "Content";
+        Long comment_id = commentService.writeComment(user2_username, board1_id, content);
+        String editContent = "EditedContent";
+
+        //when & then
+        assertThatThrownBy(() -> commentService.updateComment(user1_username, board1_id, content))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Only writer can edit");
+    }
 }
