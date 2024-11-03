@@ -173,6 +173,24 @@ class LikeServiceTest{
         assertThat(like_count).isEqualTo(3);
     }
 
+    @Test
+    void isLiked(){
+        // given
+        likeService.likeBoard(user3_username, board1_id);
+        likeService.likeBoard(user2_username, board1_id);
+
+        // when
+        Boolean isLiked_1 = likeService.isLiked(user3_username, board1_id);
+        Boolean isLiked_2 = likeService.isLiked(user2_username, board1_id);
+        Boolean isLiked_3 = likeService.isLiked(user1_username, board1_id);
+
+        // then
+        assertThat(isLiked_1).isTrue();
+        assertThat(isLiked_2).isTrue();
+        assertThat(isLiked_3).isFalse();
+    }
+
+
 
 
 
