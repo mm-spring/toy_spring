@@ -160,4 +160,18 @@ class CommentServiceTest{
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("Only writer can edit");
     }
+
+    @Test
+    void deleteComment(){
+        // given
+        String content = "Content";
+        Long comment_id = commentService.writeComment(user2_username, board1_id, content);
+
+        // when
+        commentService.deleteComment(user2_username, comment_id);
+
+        // then
+        List<Comment> comments = commentRepository.findAll();
+        assertThat(comments.size()).isZero();
+    }
 }
