@@ -2,12 +2,21 @@ package com.mm.toy.service;
 
 import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.domain.Like;
 import com.mm.toy.global.service.DatabaseCleanup;
+import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.repository.LikeRepository;
+import com.mm.toy.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 class LikeServiceTest{
@@ -19,6 +28,10 @@ class LikeServiceTest{
     LikeService likeService;
     @Autowired
     LikeRepository likeRepository;
+    @Autowired
+    BoardRepository boardRepository;
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     DatabaseCleanup databaseCleanup;
 
@@ -88,4 +101,18 @@ class LikeServiceTest{
     void cleanUp() {
         databaseCleanup.truncateAllEntity();
     }
+
+    @Test
+    @Transactional
+    void likeBoard(){
+        // when
+        Long like_id = likeService.likeBoard(user3_username, board1_id);
+
+        // then
+        Optional<Like> optionalLike = likeRepository.findByBoardAndUser(boardRepository.findById(board1_id).get(), userRepository.findByUsername(user3_username).get());
+        assertThat(optionalLike).isPresent();
+        assertThat(optionalLike.get().getUser().getUsername()).isEqualTo(user3_username);
+        assertThat(optionalLike.get().getBoard().getUser().getUsername()).isEqualTo(user1_username);
+    }
+
 }
