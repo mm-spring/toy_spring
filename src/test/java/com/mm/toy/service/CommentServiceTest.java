@@ -132,4 +132,19 @@ class CommentServiceTest{
         Board findBoard = boardService.getBoardById(board1_id);
         assertThat(findBoard.getComments().size()).isEqualTo(1);
     }
+
+    @Test
+    void updateComment(){
+        // given
+        String content = "Content";
+        Long comment_id = commentService.writeComment(user2_username, board1_id, content);
+        String editContent = "EditedContent";
+
+        // when
+        commentService.updateComment(user2_username, board1_id, editContent);
+
+        // then
+        Comment comment = commentRepository.findById(comment_id).get();
+        assertThat(comment.getContent()).isEqualTo(editContent);
+    }
 }
