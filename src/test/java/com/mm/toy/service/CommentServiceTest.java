@@ -6,6 +6,7 @@ import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
 import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.global.service.DatabaseCleanup;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+@Slf4j
 @SpringBootTest
 class CommentServiceTest{
     @Autowired
@@ -200,5 +202,23 @@ class CommentServiceTest{
 
         // then
         assertThat(comments.size()).isEqualTo(3);
+    }
+
+    @Test
+    @Transactional
+    void questionOfTransactional_2(){
+        // given
+        commentService.writeComment(user1_username, board1_id, "Content1");
+        commentService.writeComment(user2_username, board1_id, "Content2");
+        commentService.writeComment(user2_username, board1_id, "Content3");
+
+        // when
+        List<Comment> comments = commentService.getCommentsByBoard(board1_id);
+
+        // then
+        Board board = boardService.getBoardById(board1_id);
+        log.info("comments = {}", comments.size());
+        log.info("board.getComments = {}", board.getComments().size());
+        assertThat(board.getComments().size()).isNotEqualTo(comments.size());
     }
 }

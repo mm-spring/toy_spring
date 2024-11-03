@@ -34,8 +34,8 @@ public class CommentService {
                 .build();
 
         Comment savedComment = commentRepository.save(comment);
-        board.addComment(comment);
-        user.addComment(comment);
+        // board.addComment(comment);
+        // user.addComment(comment);
 
         return savedComment.getId();
     }

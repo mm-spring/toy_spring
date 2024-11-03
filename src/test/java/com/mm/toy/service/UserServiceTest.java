@@ -101,7 +101,10 @@ class UserServiceTest {
         // then
         User findUser = userRepository.findById(user_id).get();
         assertThat(findUser.getEmail()).isNotEqualTo(optionalUser.get().getEmail());
+        userRepository.save(optionalUser.get());
         userRepository.flush();
+        User findUser2 = userRepository.findById(user_id).get();
+        assertThat(findUser2.getEmail()).isEqualTo(optionalUser.get().getEmail());
         //Q1-1, Q1-2
     }
 

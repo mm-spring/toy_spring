@@ -36,8 +36,8 @@ public class LikeService {
                 .build();
 
         Like savedLike = likeRepository.save(like);
-        user.addLike(like);
-        board.addLike(like);
+        // user.addLike(like);
+        // board.addLike(like);
 
         return savedLike.getId();
     }

@@ -191,7 +191,7 @@ class BoardServiceTest {
         List<Board> findBoard = boardService.getBoardsByUsername(user1_username);
 
         // then
-        assertThat(findBoard.get(0).getTitle()).isEqualTo(boardRequestDto1.getTitle());
+        assertThat(findBoard.get(0).getUser().getUsername()).isEqualTo(user1_username);
     }
 
     @Test
