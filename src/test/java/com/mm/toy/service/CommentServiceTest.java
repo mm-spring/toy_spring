@@ -174,4 +174,16 @@ class CommentServiceTest{
         List<Comment> comments = commentRepository.findAll();
         assertThat(comments.size()).isZero();
     }
+
+    @Test
+    void notWriterWhenDeleteComment(){
+        // given
+        String content = "Content";
+        Long comment_id = commentService.writeComment(user2_username, board1_id, content);
+
+        // when & then
+        assertThatThrownBy(() -> commentService.deleteComment(user1_username, comment_id))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Only writer can edit");
+    }
 }
