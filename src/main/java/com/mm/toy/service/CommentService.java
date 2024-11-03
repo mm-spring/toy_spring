@@ -74,11 +74,12 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<Comment> getCommentsByBoard(Long board_id){
-        return boardRepository.findById(board_id).get().getComments();
+        return commentRepository.findByBoardId(board_id);
     }
 
     @Transactional(readOnly = true)
     public List<Comment> getCommentsByUser(String username){
-        return userRepository.findByUsername(username).get().getComments();
+        return commentRepository.findByUser(userRepository.findByUsername(username).get());
     }
+
 }

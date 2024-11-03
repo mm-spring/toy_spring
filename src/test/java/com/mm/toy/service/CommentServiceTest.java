@@ -217,8 +217,22 @@ class CommentServiceTest{
 
         // then
         Board board = boardService.getBoardById(board1_id);
-        log.info("comments = {}", comments.size());
-        log.info("board.getComments = {}", board.getComments().size());
+        // log.info("comments = {}", comments.size());
+        // log.info("board.getComments = {}", board.getComments().size());
         assertThat(board.getComments().size()).isNotEqualTo(comments.size());
+    }
+
+    @Test
+    void getCommentsByUser(){
+        // given
+        commentService.writeComment(user1_username, board1_id, "Content1");
+        commentService.writeComment(user2_username, board1_id, "Content2");
+        commentService.writeComment(user2_username, board1_id, "Content3");
+
+        // when
+        List<Comment> user2_comments = commentService.getCommentsByUser(user2_username);
+
+        // then
+        assertThat(user2_comments.size()).isEqualTo(2);
     }
 }
