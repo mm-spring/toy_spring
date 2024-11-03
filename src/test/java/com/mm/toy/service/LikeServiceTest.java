@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @SpringBootTest
 class LikeServiceTest{
@@ -114,5 +115,18 @@ class LikeServiceTest{
         assertThat(optionalLike.get().getUser().getUsername()).isEqualTo(user3_username);
         assertThat(optionalLike.get().getBoard().getUser().getUsername()).isEqualTo(user1_username);
     }
+
+    @Test
+    void alreadyLikeIt(){
+        // given
+        Long like_id = likeService.likeBoard(user3_username, board1_id);
+
+        // when & then
+        assertThatThrownBy(() -> likeService.likeBoard(user3_username, board1_id))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Already liked it");
+
+    }
+
 
 }
