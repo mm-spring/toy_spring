@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "boards")
 public class Board {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

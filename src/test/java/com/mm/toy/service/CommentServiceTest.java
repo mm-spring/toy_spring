@@ -186,4 +186,19 @@ class CommentServiceTest{
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("Only writer can edit");
     }
+
+    @Test
+    @Transactional
+    void getCommentsByBoard(){
+        // given
+        commentService.writeComment(user1_username, board1_id, "Content1");
+        commentService.writeComment(user2_username, board1_id, "Content2");
+        commentService.writeComment(user2_username, board1_id, "Content3");
+
+        // when
+        List<Comment> comments = commentService.getCommentsByBoard(board1_id);
+
+        // then
+        assertThat(comments.size()).isEqualTo(3);
+    }
 }
