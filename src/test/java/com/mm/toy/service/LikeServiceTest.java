@@ -145,6 +145,21 @@ class LikeServiceTest{
         assertThat(likeList.get(0).getUser().getUsername()).isEqualTo(user2_username);
     }
 
+    @Test
+    void cannotUnlikeBoardBecauseNotExist(){
+        // given
+        likeService.likeBoard(user3_username, board1_id);
+
+        // when & then
+        assertThatThrownBy(() -> likeService.unlikeBoard(user2_username, board1_id))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Like not found");
+        assertThatThrownBy(() -> likeService.unlikeBoard(user3_username, board2_id))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Like not found");
+    }
+
+
 
 
 }
