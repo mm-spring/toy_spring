@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -127,6 +128,23 @@ class LikeServiceTest{
                 .hasMessage("Already liked it");
 
     }
+
+    @Test
+    @Transactional
+    void unlikeBoard(){
+        // given
+        likeService.likeBoard(user3_username, board1_id);
+        likeService.likeBoard(user2_username, board1_id);
+
+        // when
+        likeService.unlikeBoard(user3_username, board1_id);
+
+        // then
+        List<Like> likeList = likeRepository.findAll();
+        assertThat(likeList.size()).isOne();
+        assertThat(likeList.get(0).getUser().getUsername()).isEqualTo(user2_username);
+    }
+
 
 
 }
