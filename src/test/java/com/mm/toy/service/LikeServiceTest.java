@@ -159,6 +159,20 @@ class LikeServiceTest{
                 .hasMessage("Like not found");
     }
 
+    @Test
+    void countLike(){
+        // given
+        likeService.likeBoard(user3_username, board1_id);
+        likeService.likeBoard(user2_username, board1_id);
+        likeService.likeBoard(user1_username, board1_id);
+
+        // when
+        int like_count = likeService.countLike(board1_id);
+
+        // then
+        assertThat(like_count).isEqualTo(3);
+    }
+
 
 
 
