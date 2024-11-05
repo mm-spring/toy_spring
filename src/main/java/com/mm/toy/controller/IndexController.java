@@ -1,4 +1,4 @@
-package com.mm.toy.web.controller;
+package com.mm.toy.controller;
 
 import ch.qos.logback.core.model.Model;
 import lombok.RequiredArgsConstructor;
