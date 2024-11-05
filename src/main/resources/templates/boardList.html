@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <title>Board List</title>
 </head>
 <body>
+<h1>Board List for User</h1>
+<ul>
+  <li th:each="board : ${boards}">
+    <p>Title: <span th:text="${board.title}">Board Title</span></p>
+    <p>Content: <span th:text="${board.content}">Board Content</span></p>
+    <p>Likes: <span th:text="${board.likeCount}">Like Count</span></p>
+    <p>Comments: <span th:text="${board.commentCount}">Comment Count</span></p>
+  </li>
+</ul>
 
+<button onclick="location.href='/'">Back to Main</button>
 </body>
 </html>
