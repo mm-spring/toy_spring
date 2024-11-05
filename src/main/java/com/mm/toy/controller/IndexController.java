@@ -16,30 +16,4 @@ public class IndexController {
         model.addAttribute("users", userService.getAllUser());
         return "home";
     }
-    @GetMapping("/")
-    public String index(Model model) {
-//        model.addAttribute("posts", postsService.findAllDesc());
-//        if(user != null) {
-//            model.addAttribute("userName", user.getName());
-//        }
-        return "index";
-    }
-
-    @GetMapping("/posts/save")
-    public String postsSave() {
-        return "posts-save";
-    }
-
-    @GetMapping("/posts/update/{id}")
-    public String postsUpdate(@PathVariable Long id, Model model) {
-        return "posts-update";
-    }
-
-    @GetMapping("/posts/detail/{id}")
-    public String postsDetail(@PathVariable Long id, Model model) {
-//        PostsResponseDto dto = postsService.findById(id);
-//        model.addAttribute("detail", dto);
-//        model.addAttribute("comments", commentsService.findAllDesc(id));
-        return "posts-detail";
-    }
 }

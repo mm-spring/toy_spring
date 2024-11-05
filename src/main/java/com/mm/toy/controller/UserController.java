@@ -26,14 +26,4 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/user/{username}")
-    public String getUserInfo() {
-
-    }
-
-    @GetMapping("/user")
-    public String getUsersInfo() {
-
-    }
-
 }

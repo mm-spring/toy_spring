@@ -17,28 +17,5 @@ public class BoardController {
     private final LikeService likeService;
     private final CommentService commentService;
 
-    @GetMapping("/boards")
-    public String getBoardList() {
 
-    }
-
-    @GetMapping("/boards/{boardId}")
-    public String getBoardInfo() {
-
-    }
-
-    @PostMapping("/boards/write")
-    public String writeBoard() {
-
-    }
-
-    @PutMapping("/boards/edit/{boardId}")
-    public String editBoard() {
-
-    }
-
-    @DeleteMapping("/boards/delete/{boardId}")
-    public String deleteBoard() {
-
-    }
 }
