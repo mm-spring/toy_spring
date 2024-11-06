@@ -60,7 +60,7 @@ public class LikeService {
 
     @Transactional(readOnly = true)
     public int countLike(Long board_id) {
-        return likeRepository.findByBoardId(board_id).get().;
+        return likeRepository.countByBoardId(board_id);
     }
 
     @Transactional(readOnly = true)
