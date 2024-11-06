@@ -10,4 +10,6 @@ import java.util.Optional;
 
 public interface LikeRepository extends JpaRepository<Like, Long> {
     public Optional<Like> findByBoardAndUser(Board board, User user);
+    public Optional<Like> findByBoardId(Long board_id);
+    public Optional<Like> findByBoard_idAndUser_username(Long board_id, String username);
 }

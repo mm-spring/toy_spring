@@ -47,12 +47,10 @@ public class CommentService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (comment.getUser().equals(user)){
-            comment.update(content);
-        }
-        else{
+        if (!comment.getUser().equals(user)){
             throw new RuntimeException("Only writer can edit");
         }
+        comment.update(content);
 
         return comment.getId();
     }
