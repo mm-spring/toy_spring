@@ -53,9 +53,11 @@ public class BoardController {
     @GetMapping("/user/{userId}/boards/{boardId}")
     public String getBoardDetail(@PathVariable Long userId, @PathVariable Long boardId, Model model) {
         User user = userService.getUserInfoById(userId);
+        BoardDto dto = toDto(boardService.getBoardById(boardId));
 
-        model.addAttribute("board", boardService.getBoardById(boardId));
+        model.addAttribute("board", dto);
         model.addAttribute("userId", userId);
+        model.addAttribute("comments", commentService.getCommentsByBoard(dto.getId()));
         model.addAttribute("isLiked", likeService.isLiked(user.getUsername(), boardId));
         model.addAttribute("likeCount", likeService.countLike(boardId));
         return "boardDetail";
