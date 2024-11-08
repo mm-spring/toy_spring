@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create Board</title>
+</head>
+<body>
+  <h1>Create New Board</h1>
+  <form action="#" th:action="@{/user/{userId}/boards/new(userId=${userId})}" th:object="${boardDto}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" th:field="*{title}" required>
+    <br>
+    <label for="content">Content:</label>
+    <textarea id="content" th:field="*{content}" required></textarea>
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <a th:href="@{/user/{userId}/boards/new(userId=${userId})}">
+    <button>Cancel</button>
+  </a>
+</body>
+</html>
