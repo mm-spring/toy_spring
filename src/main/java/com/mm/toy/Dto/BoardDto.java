@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
+    private Long id;
     private String title;
     private String content;
     private Long writerId;

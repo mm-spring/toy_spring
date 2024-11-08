@@ -52,8 +52,12 @@ public class BoardController {
 
     @GetMapping("/user/{userId}/boards/{boardId}")
     public String getBoardDetail(@PathVariable Long userId, @PathVariable Long boardId, Model model) {
+        User user = userService.getUserInfoById(userId);
+
         model.addAttribute("board", boardService.getBoardById(boardId));
         model.addAttribute("userId", userId);
+        model.addAttribute("isLiked", likeService.isLiked(user.getUsername(), boardId));
+        model.addAttribute("likeCount", likeService.countLike(boardId));
         return "boardDetail";
     }
 
@@ -64,10 +68,17 @@ public class BoardController {
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }
 
+    @PostMapping("/user/{userId}/boards/{boardId}/unlike")
+    public String unlikeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
+        User user = userService.getUserInfoById(userId);
+        likeService.unlikeBoard(user.getUsername(), boardId);
+        return "redirect:/user/" + userId + "/boards/" + boardId;
+    }
+
     @PostMapping("/user/{userId}/boards/{boardId}/comments")
     public String addComment(@PathVariable Long userId,
                              @PathVariable Long boardId,
-                             @ModelAttribute String content) {
+                             @RequestParam String content) {
         User user = userService.getUserInfoById(userId);
         commentService.writeComment(user.getUsername(), boardId, content);
         return "redirect:/user/" + userId + "/boards/" + boardId;
@@ -75,6 +86,7 @@ public class BoardController {
 
     private BoardDto toDto(Board board) {
         return BoardDto.builder()
+                .id(board.getId())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .writerId(board.getUser().getId())

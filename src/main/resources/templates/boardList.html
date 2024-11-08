@@ -8,10 +8,12 @@
   <p>User ID: <span th:text="${userId}">userId</span></p>
   <ul>
     <li th:each="board : ${boards}">
-      <p>Title: <span th:text="${board.title}">Board Title</span></p>
-      <p>Content: <span th:text="${board.content}">Board Content</span></p>
-      <p>Likes: <span th:text="${board.likeCount}">Like Count</span></p>
-      <p>Comments: <span th:text="${board.commentCount}">Comment Count</span></p>
+      <a th:href="@{/user/{userId}/boards/{boardId}(userId=${userId}, boardId=${board.id})}">
+        <p>Title: <span th:text="${board.title}">Board Title</span></p>
+        <p>Content: <span th:text="${board.content}">Board Content</span></p>
+        <p>Likes: <span th:text="${board.likeCount}">Like Count</span></p>
+        <p>Comments: <span th:text="${board.commentCount}">Comment Count</span></p>
+      </a>
     </li>
   </ul>
 
