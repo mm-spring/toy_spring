@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class BoardDto {
     private String title;
     private String content;
+    private Long writerId;
     private int likeCount;
     private int commentCount;
 }
