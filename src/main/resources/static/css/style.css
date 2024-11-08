@@ -1,0 +1,66 @@
+/* src/main/resources/static/css/style.css */
+
+/* 전체 페이지 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+/* 제목 스타일 */
+h1 {
+    font-size: 2em;
+    color: #333;
+}
+
+/* 사용자 목록 표 스타일 */
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #3f51b5;
+    color: white;
+    font-weight: bold;
+}
+
+td a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* 버튼 스타일 */
+.signup-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.signup-button:hover {
+    background-color: #45a049;
+}
