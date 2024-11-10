@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+<h1>Main Page</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{/user/{userId}/boards(userId=${user.id})}" th:text="${user.id}">User ID</a></td>
+        <td><a th:href="@{/user/{userId}/boards(userId=${user.id})}" th:text="${user.username}">Username</a></td>
+        <td><a th:href="@{/user/{userId}/boards(userId=${user.id})}" th:text="${user.name}">User Name</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<button class="signup-button" onclick="location.href='/signup'">Sign Up</button>
+<link rel="stylesheet" href="/css/style.css">
+
+</body>
+</html>

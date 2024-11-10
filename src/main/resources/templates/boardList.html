@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Board List</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Board List for User</h1>
+<p class="user-id">User ID: <span th:text="${userId}">userId</span></p>
+
+<div class="board-list">
+  <a th:each="board : ${boards}" th:href="@{/user/{userId}/boards/{boardId}(userId=${userId}, boardId=${board.id})}" class="board-item">
+    <p><strong>Title:</strong> <span th:text="${board.title}">Board Title</span></p>
+    <p><strong>Content:</strong> <span th:text="${board.content}">Board Content</span></p>
+    <p><strong>Likes:</strong> <span th:text="${board.likeCount}">Like Count</span></p>
+    <p><strong>Comments:</strong> <span th:text="${board.commentCount}">Comment Count</span></p>
+  </a>
+</div>
+
+<div class="button-group">
+  <a th:href="@{/user/{userId}/boards/new(userId=${userId})}">
+    <button class="button write-button">Write New Board</button>
+  </a>
+  <button class="button" onclick="location.href='/'">Back to Main</button>
+</div>
+</body>
+</html>

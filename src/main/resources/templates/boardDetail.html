@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Board Detail</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<!-- 제목과 좋아요 버튼 섹션 -->
+<div class="detail-header">
+  <h1 class="detail-title">Board Detail</h1>
+
+  <!-- 좋아요 버튼 -->
+  <form th:action="@{/user/{userId}/boards/{boardId}/like(userId=${userId}, boardId=${boardId})}" method="post" th:if="${!isLiked}">
+    <button type="submit" class="like-button">
+      <i class="far fa-heart"></i>
+    </button>
+  </form>
+  <form th:action="@{/user/{userId}/boards/{boardId}/unlike(userId=${userId}, boardId=${boardId})}" method="post" th:if="${isLiked}">
+    <button type="submit" class="like-button liked">
+      <i class="fas fa-heart"></i>
+    </button>
+  </form>
+</div>
+
+<!-- 게시글 내용 -->
+<div class="board-content">
+  <h2 th:text="${board.title}">Board Title</h2>
+  <p th:text="${board.content}">Board Content</p>
+
+  <!-- 좋아요 카운트 -->
+  <div class="like-count">Likes: <span th:text="${likeCount}">0</span></div>
+</div>
+
+<!-- 댓글 섹션 (작성란과 목록을 통합) -->
+<div class="comments-section">
+  <h3>Comments</h3>
+
+  <!-- 댓글 작성 폼 -->
+  <form action="#" th:action="@{/user/{userId}/boards/{boardId}/comments(userId=${userId}, boardId=${boardId})}" method="post">
+    <label for="content">Add a Comment:</label>
+    <textarea id="content" name="content" required></textarea>
+    <button type="submit" class="submit-button">Submit Comment</button>
+  </form>
+
+  <!-- 댓글 목록 -->
+  <ul class="comment-list">
+    <li th:each="comment : ${comments}">
+      <p th:text="${comment.content}">Comment content</p>
+    </li>
+  </ul>
+</div>
+
+<a th:href="@{/user/{userId}/boards(userId=${userId})}">
+  <button class="back-button">Back to Board List</button>
+</a>
+
+</body>
+</html>
