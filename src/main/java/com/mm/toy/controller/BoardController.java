@@ -56,11 +56,13 @@ public class BoardController {
      * @param model
      * @return ?? <- 채우기
      */
-    @GetMapping("/user/{userId}/boards/new")
+    @GetMapping("/{userId}/boards/new")
     public String showCreateBoardForm(@PathVariable Long userId, Model model) {
         //   TODO     model.addAttribute("?", new ?());
+        model.addAttribute("boardDto", new BoardRequestDto());
         //   TODO     model.addAttribute("?", ?);
-        return "??";
+        model.addAttribute("userId", userId);
+        return "createBoard";
     }
 
     /**
