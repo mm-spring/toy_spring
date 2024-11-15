@@ -32,7 +32,7 @@ public class BoardController {
 
 
     /**
-     * GetMapping : 게시글 [작성 페이지] 조회
+     * GetMapping : 게시글 작성 [페이지 조회]
      * @param userId
      * @param model
      * @return ?? <- 채우기
@@ -44,10 +44,16 @@ public class BoardController {
         return "??";
     }
 
+    /**
+     * ?Mapping : 게시글 [작성]
+     * @param userId
+     * @param ?
+     * @return
+     */
     @PostMapping("/user/{userId}/boards/new")
-    public String createBoard(@PathVariable Long userId, @ModelAttribute BoardRequestDto boardDto) {
-        User user = userService.getUserInfoById(userId);
-        boardService.writeBoard(user.getUsername(), boardDto);
+    public String createBoard(@PathVariable Long userId, @ModelAttribute Object object) {
+        // TODO convert Object -> ?(특정 객체)
+        // TODO user 조회 -> board 작성
         return "redirect:/user/" + userId + "/boards";
     }
 
