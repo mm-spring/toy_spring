@@ -4,6 +4,7 @@ import com.mm.toy.Dto.BoardDto;
 import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.User;
+import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.CommentService;
 import com.mm.toy.service.LikeService;
@@ -20,10 +21,13 @@ import java.util.stream.Collectors;
 //TODO add annotation
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class BoardController {
 
     //TODO Injection dependence
     private final BoardService boardService;
+    private final UserService userService;
+    private final BoardRepository boardRepository;
 
 
     /***
@@ -32,7 +36,14 @@ public class BoardController {
      * @param model
      * @return boardList
      */
-    @GetMapping
+    @GetMapping("/boards/{userId}")
+    public String getBoardList(@PathVariable Long userId, Model model){
+        User user = userService.getUserInfoById(userId);
+        List<Board> foundBoard = boardRepository.findByUser_Id(userId);
+        model.addAttribute("userId", userId);
+        model.addAttribute("Boards", foundBoard);
+        return "boardList";
+    }
 
 
     /**
