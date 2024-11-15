@@ -50,46 +50,69 @@ public class BoardController {
      * @param ?
      * @return
      */
-    @PostMapping("/user/{userId}/boards/new")
+    //@?Mapping("/user/{userId}/boards/new")
     public String createBoard(@PathVariable Long userId, @ModelAttribute Object object) {
         // TODO convert Object -> ?(특정 객체)
         // TODO user 조회 -> board 작성
         return "redirect:/user/" + userId + "/boards";
     }
 
-    @GetMapping("/user/{userId}/boards/{boardId}")
+    /**
+     * ?Mapping : 게시글 상세 페이지 조회
+     * @param userId
+     * @param boardId
+     * @param model
+     * @return
+     */
+    //TODO@?Mapping("/user/{userId}/boards/{boardId}")
     public String getBoardDetail(@PathVariable Long userId, @PathVariable Long boardId, Model model) {
-        User user = userService.getUserInfoById(userId);
-        BoardDto dto = toDto(boardService.getBoardById(boardId));
+        //TODO user 조회 -> toDto 메서드 활용
 
-        model.addAttribute("board", dto);
+
+        //TODO model.addAttribute("?", ?); -> board의 데이터
         model.addAttribute("userId", userId);
-        model.addAttribute("comments", commentService.getCommentsByBoard(dto.getId()));
-        model.addAttribute("isLiked", likeService.isLiked(user.getUsername(), boardId));
-        model.addAttribute("likeCount", likeService.countLike(boardId));
+        //TODO model.addAttribute("comments", ?); -> comment List 불러오기
+        //TODO model.addAttribute("?", ?); -> 해당 게시글에 좋아요를 눌렀는지에 대한 데이터 조회
+        //TODO model.addAttribute("?", ?); -> 해당 게시글의 좋아요 개수
         return "boardDetail";
     }
 
-    @PostMapping("/user/{userId}/boards/{boardId}/like")
-    public String likeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
-        User user = userService.getUserInfoById(userId);
-        likeService.likeBoard(user.getUsername(), boardId);
-        return "redirect:/user/" + userId + "/boards/" + boardId;
+    /**
+     * ?Mapping : 좋아요
+     * @param ?
+     * @param ?
+     * @return
+     */
+    //TODO @?Mapping("?")
+    public String likeBoard(@PathVariable Long id_1, @PathVariable Long id_2) {
+        //TODO user 조회 -> like 누르기
+        return "redirect:/user/" + "?" + "/boards/" + "?";
     }
 
-    @PostMapping("/user/{userId}/boards/{boardId}/unlike")
-    public String unlikeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
-        User user = userService.getUserInfoById(userId);
-        likeService.unlikeBoard(user.getUsername(), boardId);
-        return "redirect:/user/" + userId + "/boards/" + boardId;
+    /**
+     *
+     * @param ?
+     * @param ?
+     * @return
+     */
+    //@?Mapping("/user/{userId}/boards/{boardId}/unlike")
+    public String unlikeBoard(@PathVariable Long id_1, @PathVariable Long id_2) {
+        //TODO user 조회 -> like 취소
+        return "redirect:/user/" + "?" + "/boards/" + "?";
     }
 
+    /**
+     *
+     * @param userId
+     * @param boardId
+     * @param content
+     * @return
+     */
     @PostMapping("/user/{userId}/boards/{boardId}/comments")
     public String addComment(@PathVariable Long userId,
                              @PathVariable Long boardId,
                              @RequestParam String content) {
-        User user = userService.getUserInfoById(userId);
-        commentService.writeComment(user.getUsername(), boardId, content);
+        //TODO user 조회 -> comment 작성
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }
 
@@ -100,7 +123,7 @@ public class BoardController {
                 .content(board.getContent())
                 .writerId(board.getUser().getId())
                 .commentCount(board.getComments().size())
-                .likeCount(likeService.countLike(board.getId()))
+                .likeCount(//TODO count 조회 서비스 메서드 조회)
                 .build();
     }
 }
