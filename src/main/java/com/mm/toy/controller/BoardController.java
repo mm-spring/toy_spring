@@ -25,16 +25,23 @@ public class BoardController {
 
     /***
      * GetMapping : 게시글 리스트 조회 메서드 -> view에서 path찾기
-     * @Argument userId, model
+     * @param userId
+     * @param model
      * @return boardList
      */
 
 
+    /**
+     * GetMapping : 게시글 [작성 페이지] 조회
+     * @param userId
+     * @param model
+     * @return ?? <- 채우기
+     */
     @GetMapping("/user/{userId}/boards/new")
     public String showCreateBoardForm(@PathVariable Long userId, Model model) {
-        model.addAttribute("boardDto", new BoardRequestDto());
-        model.addAttribute("userId", userId);
-        return "createBoard";
+        //   TODO     model.addAttribute("?", new ?());
+        //   TODO     model.addAttribute("?", ?);
+        return "??";
     }
 
     @PostMapping("/user/{userId}/boards/new")
