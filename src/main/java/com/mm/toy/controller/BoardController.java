@@ -28,6 +28,7 @@ public class BoardController {
     private final BoardService boardService;
     private final UserService userService;
     private final BoardRepository boardRepository;
+    private final LikeService likeService;
 
 
     /***
@@ -36,12 +37,15 @@ public class BoardController {
      * @param model
      * @return boardList
      */
-    @GetMapping("/boards/{userId}")
+    @GetMapping("/{userId}/boards")
     public String getBoardList(@PathVariable Long userId, Model model){
         User user = userService.getUserInfoById(userId);
         List<Board> foundBoard = boardRepository.findByUser_Id(userId);
+        List<BoardDto> boards = foundBoard.stream()
+                        .map(this::toDto)
+                        .collect(Collectors.toList());
         model.addAttribute("userId", userId);
-        model.addAttribute("Boards", foundBoard);
+        model.addAttribute("boards", boards);
         return "boardList";
     }
 
@@ -131,14 +135,14 @@ public class BoardController {
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }
 
-    // private BoardDto toDto(Board board) {
-    //     return BoardDto.builder()
-    //             .id(board.getId())
-    //             .title(board.getTitle())
-    //             .content(board.getContent())
-    //             .writerId(board.getUser().getId())
-    //             .commentCount(board.getComments().size())
-    //             .likeCount(//TODO count 조회 서비스 메서드 조회)
-    //             .build();
-    // }
+    private BoardDto toDto(Board board) {
+        return BoardDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writerId(board.getUser().getId())
+                .commentCount(board.getComments().size())
+                .likeCount(likeService.countLike(board.getId()))
+                .build();
+    }
 }
