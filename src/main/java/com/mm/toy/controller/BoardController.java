@@ -131,14 +131,14 @@ public class BoardController {
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }
 
-    private BoardDto toDto(Board board) {
-        return BoardDto.builder()
-                .id(board.getId())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .writerId(board.getUser().getId())
-                .commentCount(board.getComments().size())
-                .likeCount(//TODO count 조회 서비스 메서드 조회)
-                .build();
-    }
+    // private BoardDto toDto(Board board) {
+    //     return BoardDto.builder()
+    //             .id(board.getId())
+    //             .title(board.getTitle())
+    //             .content(board.getContent())
+    //             .writerId(board.getUser().getId())
+    //             .commentCount(board.getComments().size())
+    //             .likeCount(//TODO count 조회 서비스 메서드 조회)
+    //             .build();
+    // }
 }
