@@ -17,24 +17,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
-@RequiredArgsConstructor
-@Controller
+//TODO add annotation
 public class BoardController {
-    private final UserService userService;
-    private final BoardService boardService;
-    private final LikeService likeService;
-    private final CommentService commentService;
 
-    @GetMapping("/user/{userId}/boards")
-    public String getBoardList(@PathVariable Long userId, Model model) {
-        User user = userService.getUserInfoById(userId);
-        List<Board> boards = boardService.getAllBoards();
-        List<BoardDto> collect = boards.stream().map(board -> toDto(board)).collect(Collectors.toList());
-        model.addAttribute("boards", collect);
-        model.addAttribute("userId", userId);
-        return "boardList";
-    }
+    //TODO Injection dependence
+
+
+    /***
+     * GetMapping : 게시글 리스트 조회 메서드 -> view에서 path찾기
+     * @Argument userId, model
+     * @return boardList
+     */
+
 
     @GetMapping("/user/{userId}/boards/new")
     public String showCreateBoardForm(@PathVariable Long userId, Model model) {
