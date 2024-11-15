@@ -21,4 +21,16 @@ public class UserController {
      * 둘의 path는 signUp으로 동일하다.
      */
 
+    @GetMapping("/signUp")
+    public String signUp(Model model){
+        model.addAttribute("user", new UserRegisterDto());
+        return "signUp";
+    }
+
+    @PostMapping("/signUp/")
+    public String registerUser(@ModelAttribute("user") UserRegisterDto userRegisterDto){
+        userService.registerUser(userRegisterDto);
+        return "redirect:/";
+    }
+
 }

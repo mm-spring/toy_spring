@@ -18,9 +18,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //TODO add annotation
+@Controller
+@RequiredArgsConstructor
 public class BoardController {
 
     //TODO Injection dependence
+    private final BoardService boardService;
 
 
     /***
@@ -29,6 +32,7 @@ public class BoardController {
      * @param model
      * @return boardList
      */
+    @GetMapping
 
 
     /**
