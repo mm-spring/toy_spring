@@ -2,6 +2,9 @@ package com.mm.toy.service;
 
 import com.mm.toy.domain.User;
 import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.repository.BoardRepository;
+import com.mm.toy.repository.CommentRepository;
+import com.mm.toy.repository.LikeRepository;
 import com.mm.toy.repository.UserRepository;
 import com.mm.toy.Dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,9 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public Long registerUser(UserRegisterDto UserRegisterDTO){
@@ -57,9 +63,15 @@ public class UserService {
 
     @Transactional
     public Boolean deleteUserById(Long user_id){
-        if (!userRepository.existsById(user_id)) {
+
+        Optional<User> user = userRepository.findById(user_id);
+        if (!user.isPresent()) {
             return false;
         }
+        boardRepository.deleteAll(user.get().getBoards());
+        commentRepository.deleteAll(user.get().getComments());
+        likeRepository.deleteAll(user.get().getLikes());
+
         userRepository.deleteById(user_id);
         return true;
     }
