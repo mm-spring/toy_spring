@@ -1,14 +1,19 @@
 package com.mm.toy.service;
 
 import com.mm.toy.domain.Board;
+import com.mm.toy.domain.Comment;
+import com.mm.toy.domain.Like;
 import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.domain.User;
+import com.mm.toy.repository.CommentRepository;
+import com.mm.toy.repository.LikeRepository;
 import com.mm.toy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +22,8 @@ import java.util.Optional;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public Long writeBoard(String username, BoardRequestDto boardRequestDto){
@@ -80,6 +87,14 @@ public class BoardService {
         if (!board.get().getUser().equals(user)){
             return false;
         }
+
+        // delete
+        List<Comment> comments = commentRepository.findByBoardId(board_id);
+        commentRepository.deleteAll(comments);
+
+        List<Like> likes = likeRepository.findByBoardId(board_id);
+        likeRepository.deleteAll(likes);
+
         boardRepository.delete(board.get());
         return true;
     }
