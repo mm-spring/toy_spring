@@ -15,7 +15,12 @@ public class BoardApiController {
     private final UserService userService;
 
     @PostMapping("/write-board")
-    public Long writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto){
+    public Long writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.writeBoard(username, boardRequestDto);
+    }
+
+    @PostMapping("/edit-board/{boardId}")
+    public Long editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
+        return boardService.editBoard(username, boardId, boardRequestDto);
     }
 }
