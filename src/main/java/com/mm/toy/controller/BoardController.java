@@ -31,6 +31,7 @@ public class BoardController {
     private final BoardRepository boardRepository;
     private final LikeService likeService;
     private final UserRepository userRepository;
+    private final CommentService commentService;
 
 
     /***
@@ -73,7 +74,7 @@ public class BoardController {
      * @param ?
      * @return
      */
-    //PostMapping("/user/{userId}/boards/new")
+    @PostMapping("/{userId}/boards/new")
     public String createBoard(@PathVariable Long userId, @ModelAttribute BoardRequestDto boardDto) {
         // TODO convert Object -> ?(특정 객체)
         User user = userService.getUserInfoById(userId);
@@ -89,16 +90,21 @@ public class BoardController {
      * @param model
      * @return
      */
-    //TODO@?Mapping("/user/{userId}/boards/{boardId}")
+    @GetMapping("/{userId}/boards/{boardId}")
     public String getBoardDetail(@PathVariable Long userId, @PathVariable Long boardId, Model model) {
         //TODO user 조회 -> toDto 메서드 활용
-
+        User user = userService.getUserInfoById(userId);
+        BoardDto boardDto = toDto(boardService.getBoardById(boardId));
 
         //TODO model.addAttribute("?", ?); -> board의 데이터
+        model.addAttribute("board", boardDto);
         model.addAttribute("userId", userId);
         //TODO model.addAttribute("comments", ?); -> comment List 불러오기
+        model.addAttribute("comments", commentService.getCommentsByBoard(boardDto.getId()));
         //TODO model.addAttribute("?", ?); -> 해당 게시글에 좋아요를 눌렀는지에 대한 데이터 조회
+        model.addAttribute("isLiked", likeService.isLiked(user.getUsername(), boardId));
         //TODO model.addAttribute("?", ?); -> 해당 게시글의 좋아요 개수
+        model.addAttribute("likeCount", likeService.countLike(boardId));
         return "boardDetail";
     }
 
