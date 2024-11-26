@@ -14,18 +14,20 @@ public class BoardApiController {
     private final BoardService boardService;
     private final UserService userService;
 
-    @PostMapping("/write-board")
+    @PostMapping("/board")
     public Long writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.writeBoard(username, boardRequestDto);
     }
 
-    @PostMapping("/edit-board/{boardId}")
+    @PostMapping("/board/{boardId}")
     public Long editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.editBoard(username, boardId, boardRequestDto);
     }
 
-    @DeleteMapping("/remove-board/{boardId}")
+    @DeleteMapping("/board/{boardId}")
     public Boolean removeBoard(@PathVariable Long boardId, @RequestParam String username) {
         return boardService.deleteBoard(boardId, username);
     }
+
+    @GetMapping("/board")
 }
