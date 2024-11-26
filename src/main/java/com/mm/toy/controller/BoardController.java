@@ -5,6 +5,7 @@ import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.User;
 import com.mm.toy.repository.BoardRepository;
+import com.mm.toy.repository.UserRepository;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.CommentService;
 import com.mm.toy.service.LikeService;
@@ -29,6 +30,7 @@ public class BoardController {
     private final UserService userService;
     private final BoardRepository boardRepository;
     private final LikeService likeService;
+    private final UserRepository userRepository;
 
 
     /***
@@ -71,10 +73,12 @@ public class BoardController {
      * @param ?
      * @return
      */
-    //@?Mapping("/user/{userId}/boards/new")
-    public String createBoard(@PathVariable Long userId, @ModelAttribute Object object) {
+    //PostMapping("/user/{userId}/boards/new")
+    public String createBoard(@PathVariable Long userId, @ModelAttribute BoardRequestDto boardDto) {
         // TODO convert Object -> ?(특정 객체)
+        User user = userService.getUserInfoById(userId);
         // TODO user 조회 -> board 작성
+        boardService.writeBoard(user.getUsername(), boardDto);
         return "redirect:/user/" + userId + "/boards";
     }
 
