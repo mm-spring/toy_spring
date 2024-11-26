@@ -2,6 +2,7 @@ package com.mm.toy.ApiController;
 
 import com.mm.toy.Dto.UserLoginDto;
 import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.Dto.UserResponseDto;
 import com.mm.toy.Dto.UserUpdateDto;
 import com.mm.toy.domain.User;
 import com.mm.toy.repository.UserRepository;
@@ -43,12 +44,24 @@ public class UserApiController {
         return userService.deleteUserById(userService.getUserInfoByUsername(username).getId());
     }
 
-    @PostMapping("edit-user")
+    @PostMapping("/edit-user")
     public Long editUser(@RequestBody UserUpdateDto userUpdateDto) {
         Optional<User> user = userRepository.findByEmailAndName(userUpdateDto.getEmail(), userUpdateDto.getName());
         if (!user.isPresent()) {
             throw new RuntimeException("User not found");
         }
         return userService.updateUserInfo(userUpdateDto, user.get().getId());
+    }
+
+    @GetMapping("/get-user")
+    public ResponseEntity<UserResponseDto> getMemberInfoByUsername(@RequestParam String username) {
+        User user = userService.getUserInfoByUsername(username);
+        UserResponseDto dto = UserResponseDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+        return ResponseEntity.ok(dto);
+
     }
 }
