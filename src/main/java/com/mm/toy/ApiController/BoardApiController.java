@@ -43,6 +43,14 @@ public class BoardApiController {
                 .collect(toList());
     }
 
+    @GetMapping("/board/user")
+    public List<BoardDto> getBoardsByUsername(@RequestParam String username){
+        return boardService.getBoardsByUsername(username)
+                .stream()
+                .map(this::toDto)
+                .collect(toList());
+    }
+
     BoardDto toDto(Board board){
         BoardDto dto = BoardDto.builder()
                 .id(board.getId())
