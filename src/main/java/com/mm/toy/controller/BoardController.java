@@ -128,10 +128,12 @@ public class BoardController {
      * @param ?
      * @return
      */
-    //@?Mapping("/user/{userId}/boards/{boardId}/unlike")
-    public String unlikeBoard(@PathVariable Long id_1, @PathVariable Long id_2) {
+    @PostMapping("{userId}/boards/{boardId}/unlike")
+    public String unlikeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
         //TODO user 조회 -> like 취소
-        return "redirect:/user/" + "?" + "/boards/" + "?";
+        User user = userService.getUserInfoById(userId);
+        likeService.unlikeBoard(user.getUsername(), boardId);
+        return "redirect:/user/" + userId + "/boards/" + boardId;
     }
 
     /**
