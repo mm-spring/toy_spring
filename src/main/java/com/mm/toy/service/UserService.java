@@ -61,9 +61,13 @@ public class UserService {
         return userRepository.findByUsername(username).get();
     }
 
+    @Transactional(readOnly = true)
+    public Optional<User> getUserByEmailAndPassword(String email, String password){
+        return userRepository.findByEmailAndPassword(email, password);
+    }
+
     @Transactional
     public Boolean deleteUserById(Long user_id){
-
         Optional<User> user = userRepository.findById(user_id);
         if (!user.isPresent()) {
             return false;

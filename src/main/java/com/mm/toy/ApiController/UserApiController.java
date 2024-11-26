@@ -28,7 +28,8 @@ public class UserApiController {
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginDto> userLogin(@RequestParam String email, @RequestParam String password) {
-        Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+        Optional<User> user = userService.getUserByEmailAndPassword(email, password);
+
         if (!user.isPresent()) {
             throw new RuntimeException("User not found");
         }
