@@ -26,7 +26,7 @@ public class UserApiController {
         return userService.registerUser(userRegisterDto);
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<UserLoginDto> userLogin(@RequestParam String email, @RequestParam String password) {
         Optional<User> user = userService.getUserByEmailAndPassword(email, password);
 
@@ -40,12 +40,12 @@ public class UserApiController {
         return ResponseEntity.ok(userLoginDto);
     }
 
-    @DeleteMapping("/delete-user")
+    @DeleteMapping("/user")
     public Boolean deleteUser(@RequestParam String username) {
         return userService.deleteUserById(userService.getUserInfoByUsername(username).getId());
     }
 
-    @PostMapping("/edit-user")
+    @PutMapping("/user")
     public Long editUser(@RequestBody UserUpdateDto userUpdateDto, @RequestParam Long user_id) {
         Optional<User> user = userService.getUserInfoById(user_id);
 
@@ -55,7 +55,7 @@ public class UserApiController {
         return userService.updateUserInfo(userUpdateDto, user.get().getId());
     }
 
-    @GetMapping("/get-user")
+    @GetMapping("/user")
     public ResponseEntity<UserResponseDto> getMemberInfoByUsername(@RequestParam String username) {
         User user = userService.getUserInfoByUsername(username);
         UserResponseDto dto = UserResponseDto.builder()
