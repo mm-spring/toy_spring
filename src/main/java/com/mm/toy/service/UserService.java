@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -54,5 +55,13 @@ public class UserService {
         return userRepository.findByUsername(username).get();
     }
 
+    @Transactional
+    public Boolean deleteUserById(Long user_id){
+        if (!userRepository.existsById(user_id)) {
+            return false;
+        }
+        userRepository.deleteById(user_id);
+        return true;
+    }
 
 }
