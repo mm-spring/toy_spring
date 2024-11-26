@@ -1,11 +1,17 @@
 package com.mm.toy.ApiController;
 
+import com.mm.toy.Dto.BoardDto;
 import com.mm.toy.Dto.BoardRequestDto;
+import com.mm.toy.domain.Board;
 import com.mm.toy.domain.User;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,4 +36,23 @@ public class BoardApiController {
     }
 
     @GetMapping("/board")
+    public List<BoardDto> getBoards(){
+        return boardService.getAllBoards()
+                .stream()
+                .map(this::toDto)
+                .collect(toList());
+    }
+
+    BoardDto toDto(Board board){
+        BoardDto dto = BoardDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writerId(board.getUser().getId())
+                .likeCount(board.getLikes().size())
+                .commentCount(board.getComments().size())
+                .build();
+
+        return dto;
+    }
 }
