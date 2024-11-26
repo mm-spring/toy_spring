@@ -23,4 +23,9 @@ public class BoardApiController {
     public Long editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.editBoard(username, boardId, boardRequestDto);
     }
+
+    @DeleteMapping("/remove-board/{boardId}")
+    public Boolean removeBoard(@PathVariable Long boardId, @RequestParam String username) {
+        return boardService.deleteBoard(boardId, username);
+    }
 }

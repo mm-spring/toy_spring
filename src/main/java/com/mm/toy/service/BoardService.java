@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +66,22 @@ public class BoardService {
         return boardRepository.findById(board_id).get();
     }
 
+    @Transactional
+    public Boolean deleteBoard(Long board_id, String username){
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
+        Optional<Board> board = boardRepository.findById(board_id);
+
+        if (!board.isPresent()) {
+            return false;
+        }
+
+        if (!board.get().getUser().equals(user)){
+            return false;
+        }
+        boardRepository.delete(board.get());
+        return true;
+    }
 
 }
