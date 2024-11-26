@@ -100,7 +100,7 @@ public class BoardController {
         model.addAttribute("board", boardDto);
         model.addAttribute("userId", userId);
         //TODO model.addAttribute("comments", ?); -> comment List 불러오기
-        model.addAttribute("comments", commentService.getCommentsByBoard(boardDto.getId()));
+        model.addAttribute("comments", commentService.getCommentsByBoard(boardId));
         //TODO model.addAttribute("?", ?); -> 해당 게시글에 좋아요를 눌렀는지에 대한 데이터 조회
         model.addAttribute("isLiked", likeService.isLiked(user.getUsername(), boardId));
         //TODO model.addAttribute("?", ?); -> 해당 게시글의 좋아요 개수
@@ -114,10 +114,12 @@ public class BoardController {
      * @param ?
      * @return
      */
-    //TODO @?Mapping("?")
-    public String likeBoard(@PathVariable Long id_1, @PathVariable Long id_2) {
+    @PostMapping("/{userId}/boards/{boardId}/like")
+    public String likeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
         //TODO user 조회 -> like 누르기
-        return "redirect:/user/" + "?" + "/boards/" + "?";
+        User user = userService.getUserInfoById(userId);
+        likeService.likeBoard(user.getUsername(), boardId);
+        return "redirect:/user/" + userId + "/boards/" + boardId;
     }
 
     /**
