@@ -152,7 +152,7 @@ class UserServiceTest {
         Long user2_id = userService.registerUser(userRegisterDto2);
 
         // when
-        User findUser = userService.getUserInfoById(user1_id);
+        User findUser = userService.getUserInfoById(user1_id).get();
 
         // then
         assertThat(findUser.getEmail()).isEqualTo(userRegisterDto1.getEmail());

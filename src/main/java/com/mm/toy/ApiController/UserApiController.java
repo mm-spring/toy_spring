@@ -47,7 +47,8 @@ public class UserApiController {
 
     @PostMapping("/edit-user")
     public Long editUser(@RequestBody UserUpdateDto userUpdateDto, @RequestParam Long user_id) {
-        Optional<User> user = userRepository.findById(user_id);
+        Optional<User> user = userService.getUserInfoById(user_id);
+
         if (!user.isPresent()) {
             throw new RuntimeException("User not found");
         }

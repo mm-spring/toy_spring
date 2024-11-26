@@ -42,7 +42,7 @@ public class BoardController {
      */
     @GetMapping("/{userId}/boards")
     public String getBoardList(@PathVariable Long userId, Model model){
-        User user = userService.getUserInfoById(userId);
+        User user = userService.getUserInfoById(userId).get();
         List<Board> foundBoard = boardRepository.findByUser_Id(userId);
         List<BoardDto> boards = foundBoard.stream()
                         .map(this::toDto)
@@ -77,7 +77,7 @@ public class BoardController {
     @PostMapping("/{userId}/boards/new")
     public String createBoard(@PathVariable Long userId, @ModelAttribute BoardRequestDto boardDto) {
         // TODO convert Object -> ?(특정 객체)
-        User user = userService.getUserInfoById(userId);
+        User user = userService.getUserInfoById(userId).get();
         // TODO user 조회 -> board 작성
         boardService.writeBoard(user.getUsername(), boardDto);
         return "redirect:/user/" + userId + "/boards";
@@ -93,7 +93,7 @@ public class BoardController {
     @GetMapping("/{userId}/boards/{boardId}")
     public String getBoardDetail(@PathVariable Long userId, @PathVariable Long boardId, Model model) {
         //TODO user 조회 -> toDto 메서드 활용
-        User user = userService.getUserInfoById(userId);
+        User user = userService.getUserInfoById(userId).get();
         BoardDto boardDto = toDto(boardService.getBoardById(boardId));
 
         //TODO model.addAttribute("?", ?); -> board의 데이터
@@ -117,7 +117,7 @@ public class BoardController {
     @PostMapping("/{userId}/boards/{boardId}/like")
     public String likeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
         //TODO user 조회 -> like 누르기
-        User user = userService.getUserInfoById(userId);
+        User user = userService.getUserInfoById(userId).get();
         likeService.likeBoard(user.getUsername(), boardId);
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }
@@ -131,7 +131,7 @@ public class BoardController {
     @PostMapping("{userId}/boards/{boardId}/unlike")
     public String unlikeBoard(@PathVariable Long userId, @PathVariable Long boardId) {
         //TODO user 조회 -> like 취소
-        User user = userService.getUserInfoById(userId);
+        User user = userService.getUserInfoById(userId).get();
         likeService.unlikeBoard(user.getUsername(), boardId);
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }
@@ -148,7 +148,7 @@ public class BoardController {
                              @PathVariable Long boardId,
                              @RequestParam String content) {
         //TODO user 조회 -> comment 작성
-        User user = userService.getUserInfoById(userId);
+        User user = userService.getUserInfoById(userId).get();
         commentService.writeComment(user.getUsername(), boardId, content);
         return "redirect:/user/" + userId + "/boards/" + boardId;
     }

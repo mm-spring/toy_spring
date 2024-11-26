@@ -54,8 +54,8 @@ class BoardServiceTest {
         user1_id = userService.registerUser(userDto1);
         user2_id = userService.registerUser(userDto2);
 
-        user1_username = userService.getUserInfoById(user1_id).getUsername();
-        user2_username = userService.getUserInfoById(user2_id).getUsername();
+        user1_username = userService.getUserInfoById(user1_id).get().getUsername();
+        user2_username = userService.getUserInfoById(user2_id).get().getUsername();
     }
 
     @AfterEach
@@ -93,7 +93,7 @@ class BoardServiceTest {
 
         // then
         Board findBoard = boardRepository.findById(board_id).get();
-        User user = userService.getUserInfoById(user1_id);
+        User user = userService.getUserInfoById(user1_id).get();
         assertThat(findBoard.getUser()).isEqualTo(user);
         //Q2-1
     }
