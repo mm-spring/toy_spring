@@ -1,8 +1,14 @@
 package com.mm.toy.ApiController;
 
+import com.mm.toy.Dto.CommentDto;
+import com.mm.toy.domain.Comment;
 import com.mm.toy.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,5 +35,24 @@ public class CommentApiController {
     @PostMapping("comment/{commentId}")
     public Long editComment(@PathVariable Long commentId, @RequestParam String username, @RequestParam String content) {
         return commentService.updateComment(username, commentId, content);
+    }
+
+    @GetMapping("comment")
+    public List<CommentDto> getCommentsMine(@RequestParam String username){
+        return commentService.getCommentsByUser(username)
+                .stream()
+                .map(this::toCommentDto)
+                .collect(toList());
+    }
+
+    private CommentDto toCommentDto(Comment comment){
+        CommentDto commentDto = CommentDto.builder()
+                .id(comment.getId())
+                .boardId(comment.getBoard().getId())
+                .writerName(comment.getUser().getUsername())
+                .content(comment.getContent())
+                .build();
+
+        return commentDto;
     }
 }
