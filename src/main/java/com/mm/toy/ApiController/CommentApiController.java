@@ -14,4 +14,15 @@ public class CommentApiController {
     public Long writeComment(@PathVariable Long boardId, @RequestParam String username, @RequestParam String content) {
         return commentService.writeComment(username, boardId, content);
     }
+
+    @DeleteMapping("comment/{commentId}")
+    public Boolean removeComment(@PathVariable Long commentId, @RequestParam String username) {
+        try{
+            commentService.deleteComment(username, commentId);
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
+    }
 }
