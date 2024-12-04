@@ -14,4 +14,16 @@ public class LikeApiController {
     public Long likeBoard(@PathVariable Long boardId, @RequestParam String username) {
         return likeService.likeBoard(username, boardId);
     }
+
+    @DeleteMapping("boards/{boardId}")
+    public Boolean unlikeBoard(@PathVariable Long boardId, @RequestParam String username) {
+        try{
+            likeService.unlikeBoard(username, boardId);
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+
 }
