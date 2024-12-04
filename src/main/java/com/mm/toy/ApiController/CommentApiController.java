@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentApiController {
     private final CommentService commentService;
 
-    @PostMapping("comment/{boardId}")
+    @PostMapping("/boards/{boardId}/comment")
     public Long writeComment(@PathVariable Long boardId, @RequestParam String username, @RequestParam String content) {
         return commentService.writeComment(username, boardId, content);
     }
@@ -24,5 +24,10 @@ public class CommentApiController {
             return false;
         }
         return true;
+    }
+
+    @PostMapping("comment/{commentId}")
+    public Long editComment(@PathVariable Long commentId, @RequestParam String username, @RequestParam String content) {
+        return commentService.updateComment(username, commentId, content);
     }
 }
