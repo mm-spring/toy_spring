@@ -1,4 +1,4 @@
-package com.mm.toy.ApiController;
+package com.mm.toy.api;
 
 import com.mm.toy.Dto.BoardDto;
 import com.mm.toy.Dto.BoardRequestDto;
@@ -6,7 +6,6 @@ import com.mm.toy.Dto.BoardSpecificDto;
 import com.mm.toy.Dto.CommentDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
-import com.mm.toy.domain.User;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;

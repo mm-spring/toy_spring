@@ -1,4 +1,4 @@
-package com.mm.toy.ApiController;
+package com.mm.toy.api;
 
 import com.mm.toy.Dto.CommentDto;
 import com.mm.toy.domain.Comment;
