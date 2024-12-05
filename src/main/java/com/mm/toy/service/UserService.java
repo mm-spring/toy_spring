@@ -78,6 +78,8 @@ public class UserService {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
+    //TODO deleteUserById(Long user_id) -> deleteUser(String username)
+    //TODO controller에 이를 반영
     @Transactional
     public Boolean deleteUserById(Long user_id){
         //TODO 존재하지 않을 경우까지 고려한 메서드 사용으로, optional<User>이 아닌 User리턴하기
@@ -86,6 +88,8 @@ public class UserService {
         if (!user.isPresent()) {
             return false;
         }
+        //TODO 삭제 순서 고려하기
+        //삭제 안되는 경우가 존재함
         boardRepository.deleteAll(user.get().getBoards());
         commentRepository.deleteAll(user.get().getComments());
         likeRepository.deleteAll(user.get().getLikes());
