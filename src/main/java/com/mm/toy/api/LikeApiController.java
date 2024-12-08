@@ -1,5 +1,6 @@
 package com.mm.toy.api;
 
+import com.mm.toy.Dto.BoardDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.LikeService;
@@ -30,10 +31,26 @@ public class LikeApiController {
         }
         return true;
     }
-    //TODO 내가 좋아요 한 게시글 조회하기 메서드 추가
-    @GetMapping("boards")
-    public List<Board> seeLikeBoards(@RequestParam String username) {
 
+    @GetMapping("boards")
+    public List<BoardDto> seeLikeBoards(@RequestParam String username) {
+        List<Board> boards = likeService.getLikedBoardsByUsername(username);
+        return boards.stream()
+                .map(this::toBoardDto)
+                .toList();
+    }
+
+    private BoardDto toBoardDto(Board board) {
+        BoardDto dto = BoardDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writerId(board.getUser().getId())
+                .likeCount(board.getLikes().size())
+                .commentCount(board.getComments().size())
+                .build();
+
+        return dto;
     }
 
 }

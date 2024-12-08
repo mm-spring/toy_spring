@@ -77,4 +77,11 @@ public class LikeService {
 
     @Transactional(readOnly = true)
     public List<Board> getLikedBoardsByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return user.getLikes().stream()
+                .map(Like::getBoard)
+                .toList();
+    }
 }

@@ -73,7 +73,9 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
-        return boardRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
+        return boardRepository.findByUser(user);
     }
 
     @Transactional(readOnly = true)
@@ -91,7 +93,7 @@ public class BoardService {
                 .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));;
 
         // 검증
-        isValidate(board, user);
+        isUserSameWithBoardUser(board, user);
 
         // delete
         List<Comment> comments = commentRepository.findByBoardId(board_id);
@@ -103,10 +105,14 @@ public class BoardService {
         boardRepository.delete(board);
     }
 
-    private void isValidate(Board board, User user){
+    private void isUserSameWithBoardUser(Board board, User user){
         if (!board.getUser().equals(user)){
             throw new RuntimeException("User is not authorized to delete this board");
         }
+    }
+
+    private Board toBoard(BoardRequestDto boardRequestDto, User user){
+
     }
 
 }
