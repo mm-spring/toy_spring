@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,8 +69,12 @@ public class LikeService {
         return likeRepository.findByBoard_idAndUser_username(board_id, username).isPresent();
     }
 
+    @Transactional(readOnly = true)
     public Boolean isLikePresent(Board board, User user){
         Optional<Like> foundLike = likeRepository.findByBoardAndUser(board, user);
         return foundLike.isPresent();
     }
+
+    @Transactional(readOnly = true)
+    public List<Board> getLikedBoardsByUsername(String username) {
 }

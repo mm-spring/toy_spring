@@ -75,17 +75,13 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
-        //TODO repository메서드 사용은 boardRepository.findBy~ 하나만 사용
-        return boardRepository.findByUser_Id(
-                userRepository.findByUsername(username)
-                        .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"))
-                        .getId());
+        return boardRepository.findByUsername(username);
     }
 
     @Transactional(readOnly = true)
     public Board getBoardById(Long board_id){
-        //TODO get()메서드 사용 x
-        return boardRepository.findById(board_id).get();
+        return boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));
     }
 
     @Transactional
@@ -94,15 +90,12 @@ public class BoardService {
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
         //TODO board가 존재하지 않을 때 예외 발생
-        Optional<Board> board = boardRepository.findById(board_id);
-
-        if (!board.isPresent()) {
-            return false;
-        }
+        Board board = boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));;
 
         //TODO 아래 검증 과정을 private method 한줄로 변경
         //미리 만들었던 메서드 이용
-        if (!board.get().getUser().equals(user)){
+        if (!board.getUser().equals(user)){
             return false;
         }
 
@@ -113,7 +106,7 @@ public class BoardService {
         List<Like> likes = likeRepository.findByBoardId(board_id);
         likeRepository.deleteAll(likes);
 
-        boardRepository.delete(board.get());
+        boardRepository.delete(board);
         return true;
     }
 
