@@ -28,17 +28,7 @@ public class BoardService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
-        //TODO 아래 builder메서드를 private 메서드 한줄로 변경
-        /**
-         * method name : of
-         * return : Board
-         * arguments : dto, user
-         */
-        Board board = Board.builder()
-                .title(boardRequestDto.getTitle())
-                .content(boardRequestDto.getContent())
-                .user(user)
-                .build();
+        Board board = toBoard(boardRequestDto, user);
 
         Board savedBoard = boardRepository.save(board);
 
@@ -50,18 +40,14 @@ public class BoardService {
     public Long editBoard(String username, Long board_id, BoardRequestDto boardRequestDto){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
-        //TODO get()메서드 사용 x
-        Board board = boardRepository.findById(board_id).get();
 
-        //TODO 아래 64-66과정을 private 메서드 한줄로 변경
-        /**
-         * method name : validateIsWriter
-         * return : void
-         * arguments : user, board
-         */
-        if (board.getUser().equals(user)) {
-            board.update(boardRequestDto);
-        }
+        Board board = boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));
+
+        // 검증
+        validateIsWriter(user, board);
+
+        board.update(boardRequestDto);
 
         return board.getId();
     }
@@ -112,7 +98,20 @@ public class BoardService {
     }
 
     private Board toBoard(BoardRequestDto boardRequestDto, User user){
+        Board board = Board.builder()
+                .title(boardRequestDto.getTitle())
+                .content(boardRequestDto.getContent())
+                .user(user)
+                .build();
 
+        return board;
+    }
+
+
+    private void validateIsWriter(User user, Board board){
+        if (!board.getUser().equals(user)) {
+            throw new RuntimeException("User is not authorized to write this board");
+        }
     }
 
 }
