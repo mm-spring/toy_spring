@@ -19,6 +19,7 @@ import java.util.Optional;
 public class UserApiController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @PostMapping("/signup")
     public Long signUp(@RequestBody UserRegisterDto userRegisterDto) {
@@ -44,8 +45,6 @@ public class UserApiController {
         return userService.deleteUserById(userService.getUserInfoByUsername(username).getId());
     }
 
-    //TODO param -> pathVariable
-    //id를 사용하는 것들은 pathVariable로 통일시키기
     @PutMapping("/user")
     public Long editUser(@RequestBody UserUpdateDto userUpdateDto, @RequestParam Long user_id) {
         Optional<User> user = userService.getUserInfoById(user_id);
