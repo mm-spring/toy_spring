@@ -13,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -85,19 +83,15 @@ public class BoardService {
     }
 
     @Transactional
-    public Boolean deleteBoard(Long board_id, String username){
+    public void deleteBoard(Long board_id, String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
-        //TODO board가 존재하지 않을 때 예외 발생
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));;
 
-        //TODO 아래 검증 과정을 private method 한줄로 변경
-        //미리 만들었던 메서드 이용
-        if (!board.getUser().equals(user)){
-            return false;
-        }
+        // 검증
+        isValidate(board, user);
 
         // delete
         List<Comment> comments = commentRepository.findByBoardId(board_id);
@@ -107,7 +101,12 @@ public class BoardService {
         likeRepository.deleteAll(likes);
 
         boardRepository.delete(board);
-        return true;
+    }
+
+    private void isValidate(Board board, User user){
+        if (!board.getUser().equals(user)){
+            throw new RuntimeException("User is not authorized to delete this board");
+        }
     }
 
 }

@@ -36,7 +36,8 @@ public class BoardApiController {
 
     @DeleteMapping("/board/{boardId}")
     public Boolean removeBoard(@PathVariable Long boardId, @RequestParam String username) {
-        return boardService.deleteBoard(boardId, username);
+        boardService.deleteBoard(boardId, username);
+        return true;
     }
 
     @GetMapping("/board")

@@ -25,7 +25,6 @@ public class LikeApiController {
         try{
             likeService.unlikeBoard(username, boardId);
         }
-        //TODO Exception 범위 줄이기(특정 예외 사용)
         catch(RuntimeException e){
             return false;
         }
