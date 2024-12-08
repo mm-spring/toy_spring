@@ -27,8 +27,6 @@ public class CommentService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        //TODO 아래 builder가 다른 파트에서처럼 한줄 변경이 필요할 지 고민해보기
-        //builder는 왜 사용하는지
         Comment comment = Comment.builder()
                 .content(content)
                 .board(board)
@@ -36,9 +34,6 @@ public class CommentService {
                 .build();
 
         Comment savedComment = commentRepository.save(comment);
-        //TODO 아래 addComment()가 필요할지 고민해보기
-        // board.addComment(comment);
-        // user.addComment(comment);
 
         return savedComment.getId();
     }
@@ -50,15 +45,8 @@ public class CommentService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        //TODO validate 메서드 한줄로 변경
-        /**
-         * method name : validateIsWriter()
-         * return : void
-         * arguments : user, comment
-         */
-        if (!comment.getUser().equals(user)){
-            throw new RuntimeException("Only writer can edit");
-        }
+        validateIsWriter(user, comment);
+
         comment.update(content);
 
         return comment.getId();
@@ -70,16 +58,10 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Comment comment = commentRepository.findById(comment_id)
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
-        //TODO validate 메서드 한줄로 변경
-        //만들어두었던 메서드 활용
-        if (comment.getUser().equals(user)){
-            commentRepository.delete(comment);
-        }
-        //else 사용 지양하기
-        else{
-            throw new RuntimeException("Only writer can edit");
-        }
 
+        validateIsWriter(user, comment);
+
+        commentRepository.delete(comment);
     }
 
     @Transactional(readOnly = true)
@@ -89,8 +71,15 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<Comment> getCommentsByUser(String username){
-        //TODO get()메서드 사용 x
-        return commentRepository.findByUser(userRepository.findByUsername(username).get());
+        return commentRepository.findByUser(userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found")));
+    }
+
+
+    private void validateIsWriter(User user, Comment comment){
+        if (!comment.getUser().equals(user)){
+            throw new RuntimeException("Only writer can edit");
+        }
     }
 
 }
