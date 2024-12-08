@@ -17,9 +17,7 @@ public class CommentApiController {
     private final CommentService commentService;
 
     @PostMapping("/boards/{boardId}/comment")
-    public Long writeComment(@PathVariable Long boardId,
-                             @RequestParam String username,
-                             @RequestParam String content) {
+    public Long writeComment(@PathVariable Long boardId, @RequestParam String username, @RequestParam String content) {
         return commentService.writeComment(username, boardId, content);
     }
 
@@ -27,18 +25,15 @@ public class CommentApiController {
     public Boolean removeComment(@PathVariable Long commentId, @RequestParam String username) {
         try{
             commentService.deleteComment(username, commentId);
-        }//TODO Exception은 범위가 방대함. 어느 예외에서 catch 할것인지 특정 필요
+        }
         catch(Exception e){
             return false;
         }
         return true;
     }
 
-    //TODO edit method of mapping
     @PostMapping("comment/{commentId}")
-    public Long editComment(@PathVariable Long commentId,
-                            @RequestParam String username,
-                            @RequestParam String content) {
+    public Long editComment(@PathVariable Long commentId, @RequestParam String username, @RequestParam String content) {
         return commentService.updateComment(username, commentId, content);
     }
 

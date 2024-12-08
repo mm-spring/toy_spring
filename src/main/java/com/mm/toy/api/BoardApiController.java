@@ -28,7 +28,6 @@ public class BoardApiController {
         return boardService.writeBoard(username, boardRequestDto);
     }
 
-    //TODO edit mapping method
     @PostMapping("/board/{boardId}")
     public Long editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.editBoard(username, boardId, boardRequestDto);

@@ -20,12 +20,10 @@ public class LikeApiController {
         try{
             likeService.unlikeBoard(username, boardId);
         }
-        //TODO Exception 범위 줄이기(특정 예외 사용)
         catch(Exception e){
             return false;
         }
         return true;
     }
-    //TODO 내가 좋아요 한 게시글 조회하기 메서드 추가
 
 }
