@@ -2,6 +2,7 @@ package com.mm.toy.api;
 
 import com.mm.toy.Dto.BoardDto;
 import com.mm.toy.domain.Board;
+import com.mm.toy.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.LikeService;
 import lombok.RequiredArgsConstructor;
@@ -17,27 +18,24 @@ public class LikeApiController {
     private final BoardService boardService;
 
     @PostMapping("boards/{boardId}")
-    public Long likeBoard(@PathVariable Long boardId, @RequestParam String username) {
-        return likeService.likeBoard(username, boardId);
+    public ApiResponseDto<Long> likeBoard(@PathVariable Long boardId, @RequestParam String username) {
+        return ApiResponseDto.onSuccess(likeService.likeBoard(username, boardId));
     }
 
     @DeleteMapping("boards/{boardId}")
-    public Boolean unlikeBoard(@PathVariable Long boardId, @RequestParam String username) {
-        try{
-            likeService.unlikeBoard(username, boardId);
-        }
-        catch(RuntimeException e){
-            return false;
-        }
-        return true;
+    public ApiResponseDto<Boolean> unlikeBoard(@PathVariable Long boardId, @RequestParam String username) {
+        likeService.unlikeBoard(username, boardId);
+        return ApiResponseDto.onSuccess(true);
     }
 
     @GetMapping("boards")
-    public List<BoardDto> seeLikeBoards(@RequestParam String username) {
+    public ApiResponseDto<List<BoardDto>> seeLikeBoards(@RequestParam String username) {
         List<Board> boards = likeService.getLikedBoardsByUsername(username);
-        return boards.stream()
+        return ApiResponseDto.onSuccess(
+                boards.stream()
                 .map(this::toBoardDto)
-                .toList();
+                .toList()
+        );
     }
 
     private BoardDto toBoardDto(Board board) {
