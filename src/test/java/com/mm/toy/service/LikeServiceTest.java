@@ -73,10 +73,10 @@ class LikeServiceTest{
         Long user3_id = userService.registerUser(userDto3);
         Long user4_id = userService.registerUser(userDto4);
 
-        user1_username = userService.getUserInfoById(user1_id).get().getUsername();
-        user2_username = userService.getUserInfoById(user2_id).get().getUsername();
-        user3_username = userService.getUserInfoById(user3_id).get().getUsername();
-        user4_username = userService.getUserInfoById(user4_id).get().getUsername();
+        user1_username = userService.getUserInfoById(user1_id).getUsername();
+        user2_username = userService.getUserInfoById(user2_id).getUsername();
+        user3_username = userService.getUserInfoById(user3_id).getUsername();
+        user4_username = userService.getUserInfoById(user4_id).getUsername();
 
 
         BoardRequestDto boardDto1 = BoardRequestDto.builder()

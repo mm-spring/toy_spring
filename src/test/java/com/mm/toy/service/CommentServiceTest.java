@@ -55,8 +55,8 @@ class CommentServiceTest{
         Long user1_id = userService.registerUser(userDto1);
         Long user2_id = userService.registerUser(userDto2);
 
-        user1_username = userService.getUserInfoById(user1_id).get().getUsername();
-        user2_username = userService.getUserInfoById(user2_id).get().getUsername();
+        user1_username = userService.getUserInfoById(user1_id).getUsername();
+        user2_username = userService.getUserInfoById(user2_id).getUsername();
 
         BoardRequestDto boardDto1 = BoardRequestDto.builder()
                 .content("content1")

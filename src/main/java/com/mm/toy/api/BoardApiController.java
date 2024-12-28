@@ -29,14 +29,15 @@ public class BoardApiController {
     }
 
     //TODO edit mapping method
-    @PostMapping("/board/{boardId}")
+    @PutMapping("/board/{boardId}")
     public Long editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return boardService.editBoard(username, boardId, boardRequestDto);
     }
 
     @DeleteMapping("/board/{boardId}")
     public Boolean removeBoard(@PathVariable Long boardId, @RequestParam String username) {
-        return boardService.deleteBoard(boardId, username);
+        boardService.deleteBoard(boardId, username);
+        return true;
     }
 
     @GetMapping("/board")

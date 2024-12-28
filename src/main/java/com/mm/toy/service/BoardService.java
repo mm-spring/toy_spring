@@ -13,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,17 +28,7 @@ public class BoardService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
-        //TODO 아래 builder메서드를 private 메서드 한줄로 변경
-        /**
-         * method name : of
-         * return : Board
-         * arguments : dto, user
-         */
-        Board board = Board.builder()
-                .title(boardRequestDto.getTitle())
-                .content(boardRequestDto.getContent())
-                .user(user)
-                .build();
+        Board board = toBoard(boardRequestDto, user);
 
         Board savedBoard = boardRepository.save(board);
 
@@ -52,18 +40,14 @@ public class BoardService {
     public Long editBoard(String username, Long board_id, BoardRequestDto boardRequestDto){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
-        //TODO get()메서드 사용 x
-        Board board = boardRepository.findById(board_id).get();
 
-        //TODO 아래 64-66과정을 private 메서드 한줄로 변경
-        /**
-         * method name : validateIsWriter
-         * return : void
-         * arguments : user, board
-         */
-        if (board.getUser().equals(user)) {
-            board.update(boardRequestDto);
-        }
+        Board board = boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));
+
+        // 검증
+        validateIsWriter(user, board);
+
+        board.update(boardRequestDto);
 
         return board.getId();
     }
@@ -75,36 +59,27 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
-        //TODO repository메서드 사용은 boardRepository.findBy~ 하나만 사용
-        return boardRepository.findByUser_Id(
-                userRepository.findByUsername(username)
-                        .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"))
-                        .getId());
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
+        return boardRepository.findByUser(user);
     }
 
     @Transactional(readOnly = true)
     public Board getBoardById(Long board_id){
-        //TODO get()메서드 사용 x
-        return boardRepository.findById(board_id).get();
+        return boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));
     }
 
     @Transactional
-    public Boolean deleteBoard(Long board_id, String username){
+    public void deleteBoard(Long board_id, String username){
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
 
-        //TODO board가 존재하지 않을 때 예외 발생
-        Optional<Board> board = boardRepository.findById(board_id);
+        Board board = boardRepository.findById(board_id)
+                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));;
 
-        if (!board.isPresent()) {
-            return false;
-        }
-
-        //TODO 아래 검증 과정을 private method 한줄로 변경
-        //미리 만들었던 메서드 이용
-        if (!board.get().getUser().equals(user)){
-            return false;
-        }
+        // 검증
+        isUserSameWithBoardUser(board, user);
 
         // delete
         List<Comment> comments = commentRepository.findByBoardId(board_id);
@@ -113,8 +88,30 @@ public class BoardService {
         List<Like> likes = likeRepository.findByBoardId(board_id);
         likeRepository.deleteAll(likes);
 
-        boardRepository.delete(board.get());
-        return true;
+        boardRepository.delete(board);
+    }
+
+    private void isUserSameWithBoardUser(Board board, User user){
+        if (!board.getUser().equals(user)){
+            throw new RuntimeException("User is not authorized to delete this board");
+        }
+    }
+
+    private Board toBoard(BoardRequestDto boardRequestDto, User user){
+        Board board = Board.builder()
+                .title(boardRequestDto.getTitle())
+                .content(boardRequestDto.getContent())
+                .user(user)
+                .build();
+
+        return board;
+    }
+
+
+    private void validateIsWriter(User user, Board board){
+        if (!board.getUser().equals(user)) {
+            throw new RuntimeException("User is not authorized to write this board");
+        }
     }
 
 }

@@ -1,14 +1,20 @@
 package com.mm.toy.api;
 
+import com.mm.toy.Dto.BoardDto;
+import com.mm.toy.domain.Board;
+import com.mm.toy.service.BoardService;
 import com.mm.toy.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/like")
 public class LikeApiController {
     private final LikeService likeService;
+    private final BoardService boardService;
 
     @PostMapping("boards/{boardId}")
     public Long likeBoard(@PathVariable Long boardId, @RequestParam String username) {
@@ -20,12 +26,31 @@ public class LikeApiController {
         try{
             likeService.unlikeBoard(username, boardId);
         }
-        //TODO Exception 범위 줄이기(특정 예외 사용)
-        catch(Exception e){
+        catch(RuntimeException e){
             return false;
         }
         return true;
     }
-    //TODO 내가 좋아요 한 게시글 조회하기 메서드 추가
+
+    @GetMapping("boards")
+    public List<BoardDto> seeLikeBoards(@RequestParam String username) {
+        List<Board> boards = likeService.getLikedBoardsByUsername(username);
+        return boards.stream()
+                .map(this::toBoardDto)
+                .toList();
+    }
+
+    private BoardDto toBoardDto(Board board) {
+        BoardDto dto = BoardDto.builder()
+                .id(board.getId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writerId(board.getUser().getId())
+                .likeCount(board.getLikes().size())
+                .commentCount(board.getComments().size())
+                .build();
+
+        return dto;
+    }
 
 }
