@@ -6,6 +6,7 @@ import com.mm.toy.Dto.BoardSpecificDto;
 import com.mm.toy.Dto.CommentDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
+import com.mm.toy.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,40 +25,42 @@ public class BoardApiController {
     private final UserService userService;
 
     @PostMapping("/board")
-    public Long writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
-        return boardService.writeBoard(username, boardRequestDto);
+    public ApiResponseDto<Long> writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
+        return ApiResponseDto.onSuccess(boardService.writeBoard(username, boardRequestDto));
     }
 
-    //TODO edit mapping method
     @PutMapping("/board/{boardId}")
-    public Long editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
-        return boardService.editBoard(username, boardId, boardRequestDto);
+    public ApiResponseDto<Long> editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
+        return ApiResponseDto.onSuccess(boardService.editBoard(username, boardId, boardRequestDto));
     }
 
     @DeleteMapping("/board/{boardId}")
-    public Boolean removeBoard(@PathVariable Long boardId, @RequestParam String username) {
+    public ApiResponseDto<Boolean> removeBoard(@PathVariable Long boardId, @RequestParam String username) {
         boardService.deleteBoard(boardId, username);
-        return true;
+        return ApiResponseDto.onSuccess(true);
     }
 
     @GetMapping("/board")
-    public List<BoardDto> getBoards(){
-        return boardService.getAllBoards()
-                .stream()
-                .map(this::toBoardDto)
-                .collect(toList());
+    public ApiResponseDto<List<BoardDto>> getBoards(){
+        return ApiResponseDto.onSuccess(
+                boardService.getAllBoards()
+                        .stream()
+                        .map(this::toBoardDto)
+                        .collect(toList())
+        );
     }
 
     @GetMapping("/board/user")
-    public List<BoardDto> getBoardsByUsername(@RequestParam String username){
-        return boardService.getBoardsByUsername(username)
+    public ApiResponseDto<List<BoardDto>> getBoardsByUsername(@RequestParam String username){
+        return ApiResponseDto.onSuccess
+                (boardService.getBoardsByUsername(username)
                 .stream()
                 .map(this::toBoardDto)
-                .collect(toList());
+                .collect(toList()));
     }
 
     @GetMapping("/board/{boardId}")
-    public ResponseEntity<BoardSpecificDto> getBoard(@PathVariable Long boardId){
+    public ApiResponseDto<BoardSpecificDto> getBoard(@PathVariable Long boardId){
         Board board = boardService.getBoardById(boardId);
 
         List<CommentDto> comments = board.getComments()
@@ -75,7 +78,7 @@ public class BoardApiController {
                 .commentDto(comments)
                 .build();
 
-        return ResponseEntity.ok(boardSpecificDto);
+        return ApiResponseDto.onSuccess(boardSpecificDto);
     }
 
     BoardDto toBoardDto(Board board){
