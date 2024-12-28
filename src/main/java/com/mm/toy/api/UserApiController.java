@@ -27,13 +27,10 @@ public class UserApiController {
 
     @GetMapping("/login")
     public ResponseEntity<UserLoginDto> userLogin(@RequestParam String email, @RequestParam String password) {
-        Optional<User> user = userService.getUserByEmailAndPassword(email, password);
+        User user = userService.getUserByEmailAndPassword(email, password);
 
-        if (!user.isPresent()) {
-            throw new RuntimeException("User not found");
-        }
         UserLoginDto userLoginDto = UserLoginDto.builder()
-                .username(user.get().getUsername())
+                .username(user.getUsername())
                 .build();
 
         return ResponseEntity.ok(userLoginDto);
@@ -46,12 +43,9 @@ public class UserApiController {
 
     @PutMapping("/user/{userId}")
     public Long editUser(@RequestBody UserUpdateDto userUpdateDto, @PathVariable Long uesrId) {
-        Optional<User> user = userService.getUserInfoById(uesrId);
+        User user = userService.getUserInfoById(uesrId);
 
-        if (!user.isPresent()) {
-            throw new RuntimeException("User not found");
-        }
-        return userService.updateUserInfo(userUpdateDto, user.get().getId());
+        return userService.updateUserInfo(userUpdateDto, user.getId());
     }
 
     @GetMapping("/user")
