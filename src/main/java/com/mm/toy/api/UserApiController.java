@@ -5,6 +5,7 @@ import com.mm.toy.Dto.UserRegisterDto;
 import com.mm.toy.Dto.UserResponseDto;
 import com.mm.toy.Dto.UserUpdateDto;
 import com.mm.toy.domain.User;
+import com.mm.toy.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.repository.UserRepository;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,42 +22,42 @@ public class UserApiController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public Long signUp(@RequestBody UserRegisterDto userRegisterDto) {
-        return userService.registerUser(userRegisterDto);
+    public ApiResponseDto<Long> signUp(@RequestBody UserRegisterDto userRegisterDto) {
+        return ApiResponseDto.onSuccess(userService.registerUser(userRegisterDto));
     }
 
     @GetMapping("/login")
-    public ResponseEntity<UserLoginDto> userLogin(@RequestParam String email, @RequestParam String password) {
+    public ApiResponseDto<UserLoginDto> userLogin(@RequestParam String email, @RequestParam String password) {
         User user = userService.getUserByEmailAndPassword(email, password);
 
         UserLoginDto userLoginDto = UserLoginDto.builder()
                 .username(user.getUsername())
                 .build();
 
-        return ResponseEntity.ok(userLoginDto);
+        return ApiResponseDto.onSuccess(userLoginDto);
     }
 
     @DeleteMapping("/user")
-    public Boolean deleteUser(@RequestParam String username) {
-        return userService.deleteUserById(userService.getUserInfoByUsername(username).getId());
+    public ApiResponseDto<Boolean> deleteUser(@RequestParam String username) {
+        userService.deleteUser(userService.getUserInfoByUsername(username).getUsername());
+        return ApiResponseDto.onSuccess(true);
     }
 
     @PutMapping("/user/{userId}")
-    public Long editUser(@RequestBody UserUpdateDto userUpdateDto, @PathVariable Long uesrId) {
+    public ApiResponseDto<Long> editUser(@RequestBody UserUpdateDto userUpdateDto, @PathVariable Long uesrId) {
         User user = userService.getUserInfoById(uesrId);
 
-        return userService.updateUserInfo(userUpdateDto, user.getId());
+        return ApiResponseDto.onSuccess(userService.updateUserInfo(userUpdateDto, user.getId()));
     }
 
     @GetMapping("/user")
-    public ResponseEntity<UserResponseDto> getMemberInfoByUsername(@RequestParam String username) {
+    public ApiResponseDto<UserResponseDto> getMemberInfoByUsername(@RequestParam String username) {
         User user = userService.getUserInfoByUsername(username);
         UserResponseDto dto = UserResponseDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .build();
-        return ResponseEntity.ok(dto);
-
+        return ApiResponseDto.onSuccess(dto);
     }
 }
