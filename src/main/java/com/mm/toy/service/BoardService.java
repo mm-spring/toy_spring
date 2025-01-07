@@ -3,6 +3,9 @@ package com.mm.toy.service;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
 import com.mm.toy.domain.Like;
+import com.mm.toy.presentation.payload.code.ErrorStatus;
+import com.mm.toy.presentation.payload.exception.BoardHandler;
+import com.mm.toy.presentation.payload.exception.UserHandler;
 import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.Dto.BoardRequestDto;
 import com.mm.toy.domain.User;
@@ -26,7 +29,7 @@ public class BoardService {
     @Transactional
     public Long writeBoard(String username, BoardRequestDto boardRequestDto){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
         Board board = toBoard(boardRequestDto, user);
 
@@ -39,10 +42,10 @@ public class BoardService {
     @Transactional
     public Long editBoard(String username, Long board_id, BoardRequestDto boardRequestDto){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
         Board board = boardRepository.findById(board_id)
-                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));
+                .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
 
         // 검증
         validateIsWriter(user, board);
@@ -60,23 +63,23 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
         return boardRepository.findByUser(user);
     }
 
     @Transactional(readOnly = true)
     public Board getBoardById(Long board_id){
         return boardRepository.findById(board_id)
-                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));
+                .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
     }
 
     @Transactional
     public void deleteBoard(Long board_id, String username){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User with username " + username + " not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
 
         Board board = boardRepository.findById(board_id)
-                .orElseThrow(() -> new RuntimeException("Board with id " + board_id + " not found"));;
+                .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
 
         // 검증
         isUserSameWithBoardUser(board, user);
@@ -93,7 +96,7 @@ public class BoardService {
 
     private void isUserSameWithBoardUser(Board board, User user){
         if (!board.getUser().equals(user)){
-            throw new RuntimeException("User is not authorized to delete this board");
+            throw new BoardHandler(ErrorStatus.BOARD_CAN_ONLY_BE_MODIFIED_BY_WRITER);
         }
     }
 
@@ -110,7 +113,7 @@ public class BoardService {
 
     private void validateIsWriter(User user, Board board){
         if (!board.getUser().equals(user)) {
-            throw new RuntimeException("User is not authorized to write this board");
+            throw new BoardHandler(ErrorStatus.BOARD_CAN_ONLY_BE_MODIFIED_BY_WRITER);
         }
     }
 
