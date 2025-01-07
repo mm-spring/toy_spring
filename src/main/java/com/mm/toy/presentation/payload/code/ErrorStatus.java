@@ -16,7 +16,7 @@ public enum ErrorStatus implements BaseCode{
     _BAD_REQUEST(BAD_REQUEST, 4000, "Bad request"),
 
     // 회원 오류(4100~4199)
-    MEMBER_NOT_FOUND(NOT_FOUND, 4100, "User not found"),
+    USER_NOT_FOUND(NOT_FOUND, 4100, "User not found"),
 
     // 게시판 오류(4200~4299)
     BOARD_NOT_FOUND(NOT_FOUND, 4200, "Board not found"),

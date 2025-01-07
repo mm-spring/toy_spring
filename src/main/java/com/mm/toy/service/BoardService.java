@@ -29,7 +29,7 @@ public class BoardService {
     @Transactional
     public Long writeBoard(String username, BoardRequestDto boardRequestDto){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         Board board = toBoard(boardRequestDto, user);
 
@@ -42,7 +42,7 @@ public class BoardService {
     @Transactional
     public Long editBoard(String username, Long board_id, BoardRequestDto boardRequestDto){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
@@ -63,7 +63,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public List<Board> getBoardsByUsername(String username){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
         return boardRepository.findByUser(user);
     }
 
@@ -76,7 +76,7 @@ public class BoardService {
     @Transactional
     public void deleteBoard(Long board_id, String username){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserHandler(ErrorStatus.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));

@@ -3,6 +3,10 @@ package com.mm.toy.service;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
 import com.mm.toy.domain.User;
+import com.mm.toy.presentation.payload.code.ErrorStatus;
+import com.mm.toy.presentation.payload.exception.BoardHandler;
+import com.mm.toy.presentation.payload.exception.CommentHandler;
+import com.mm.toy.presentation.payload.exception.UserHandler;
 import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.repository.UserRepository;
@@ -22,10 +26,10 @@ public class CommentService {
     @Transactional
     public Long writeComment(String username, Long board_id, String content){
         Board board = boardRepository.findById(board_id)
-                .orElseThrow(() -> new RuntimeException("Board not found"));
+                .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         Comment comment = Comment.builder()
                 .content(content)
@@ -41,9 +45,9 @@ public class CommentService {
     @Transactional
     public Long updateComment(String username, Long comment_id, String content){
         Comment comment = commentRepository.findById(comment_id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new CommentHandler(ErrorStatus.COMMENT_NOT_FOUND));
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         validateIsWriter(user, comment);
 
@@ -55,9 +59,9 @@ public class CommentService {
     @Transactional
     public void deleteComment(String username, Long comment_id){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
         Comment comment = commentRepository.findById(comment_id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new CommentHandler(ErrorStatus.COMMENT_NOT_FOUND));
 
         validateIsWriter(user, comment);
 
@@ -71,14 +75,16 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<Comment> getCommentsByUser(String username){
-        return commentRepository.findByUser(userRepository.findByUsername(username)
-                                .orElseThrow(() -> new RuntimeException("User not found")));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
+
+        return commentRepository.findByUser(user);
     }
 
 
     private void validateIsWriter(User user, Comment comment){
         if (!comment.getUser().equals(user)){
-            throw new RuntimeException("Only writer can edit");
+            throw new CommentHandler(ErrorStatus.COMMENT_CAN_ONLY_BE_MODIFIED_BY_WRITER);
         }
     }
 
