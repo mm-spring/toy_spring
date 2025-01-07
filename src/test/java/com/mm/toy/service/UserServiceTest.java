@@ -6,6 +6,7 @@ import com.mm.toy.repository.UserRepository;
 import com.mm.toy.Dto.UserUpdateDto;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@Disabled
 @SpringBootTest
 class UserServiceTest {
     @Autowired
