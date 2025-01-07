@@ -3,6 +3,10 @@ package com.mm.toy.service;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Like;
 import com.mm.toy.domain.User;
+import com.mm.toy.presentation.payload.code.ErrorStatus;
+import com.mm.toy.presentation.payload.exception.BoardHandler;
+import com.mm.toy.presentation.payload.exception.LikeHandler;
+import com.mm.toy.presentation.payload.exception.UserHandler;
 import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.repository.LikeRepository;
 import com.mm.toy.repository.UserRepository;
@@ -23,12 +27,12 @@ public class LikeService {
     @Transactional
     public Long likeBoard(String username, Long board_id) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
         Board board = boardRepository.findById(board_id)
-                .orElseThrow(() -> new RuntimeException("Board not found"));
+                .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
 
         if (isLikePresent(board, user)) {
-            throw new RuntimeException("Already liked it");
+            throw new LikeHandler(ErrorStatus.ALREADY_LIKED);
         }
 
         Like like = Like.builder()
@@ -37,8 +41,6 @@ public class LikeService {
                 .build();
 
         Like savedLike = likeRepository.save(like);
-        // user.addLike(like);
-        // board.addLike(like);
 
         return savedLike.getId();
     }
@@ -46,14 +48,14 @@ public class LikeService {
     @Transactional
     public void unlikeBoard(String username, Long board_id) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
         Board board = boardRepository.findById(board_id)
-                .orElseThrow(() -> new RuntimeException("Board not found"));
+                .orElseThrow(() -> new BoardHandler(ErrorStatus.BOARD_NOT_FOUND));
 
         Optional<Like> foundLike = likeRepository.findByBoardAndUser(board, user);
 
         if (!foundLike.isPresent()) {
-            throw new RuntimeException("Like not found");
+            throw new LikeHandler(ErrorStatus.LIKE_NOT_FOUND);
 
         }
         likeRepository.delete(foundLike.get());
@@ -78,7 +80,7 @@ public class LikeService {
     @Transactional(readOnly = true)
     public List<Board> getLikedBoardsByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         return user.getLikes().stream()
                 .map(Like::getBoard)
