@@ -2,6 +2,8 @@ package com.mm.toy.service;
 
 import com.mm.toy.domain.User;
 import com.mm.toy.Dto.UserRegisterDto;
+import com.mm.toy.presentation.payload.code.ErrorStatus;
+import com.mm.toy.presentation.payload.exception.UserHandler;
 import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.repository.LikeRepository;
@@ -36,7 +38,7 @@ public class UserService {
     @Transactional
     public Long updateUserInfo(UserUpdateDto userUpdateDto, Long user_id){
         User user = userRepository.findById(user_id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
         user.updateUserInfo(userUpdateDto);
         return user.getId();
     }
@@ -50,20 +52,20 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getUserInfoById(Long member_id){
         return userRepository.findById(member_id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
     public User getUserInfoByUsername(String username){
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
     }
 
 
     @Transactional(readOnly = true)
     public User getUserByEmailAndPassword(String email, String password){
         return userRepository.findByEmailAndPassword(email, password)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
     }
 
     //TODO deleteUserById(Long user_id) -> deleteUser(String username)
@@ -71,7 +73,7 @@ public class UserService {
     @Transactional
     public Boolean deleteUser(String username){
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         //TODO 삭제 순서 고려하기
         //삭제 안되는 경우가 존재함

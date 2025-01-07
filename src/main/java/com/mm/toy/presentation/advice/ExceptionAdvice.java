@@ -2,6 +2,8 @@ package com.mm.toy.presentation.advice;
 
 import com.mm.toy.presentation.payload.code.Reason;
 import com.mm.toy.presentation.payload.exception.BoardHandler;
+import com.mm.toy.presentation.payload.exception.CommentHandler;
+import com.mm.toy.presentation.payload.exception.LikeHandler;
 import com.mm.toy.presentation.payload.exception.UserHandler;
 import jdk.jshell.spi.ExecutionControl;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,16 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BoardHandler.class)
     public ResponseEntity<Reason> handleBoardException(BoardHandler ex) {
+        return new ResponseEntity<>(ex.getErrorReasonHttpStatus(), ex.getErrorReasonHttpStatus().getHttpStatus());
+    }
+
+    @ExceptionHandler(LikeHandler.class)
+    public ResponseEntity<Reason> handleLikeException(LikeHandler ex) {
+        return new ResponseEntity<>(ex.getErrorReasonHttpStatus(), ex.getErrorReasonHttpStatus().getHttpStatus());
+    }
+
+    @ExceptionHandler(CommentHandler.class)
+    public ResponseEntity<Reason> handleCommentException(CommentHandler ex) {
         return new ResponseEntity<>(ex.getErrorReasonHttpStatus(), ex.getErrorReasonHttpStatus().getHttpStatus());
     }
 }
