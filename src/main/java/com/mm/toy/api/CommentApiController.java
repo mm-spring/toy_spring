@@ -2,7 +2,7 @@ package com.mm.toy.api;
 
 import com.mm.toy.Dto.CommentDto;
 import com.mm.toy.domain.Comment;
-import com.mm.toy.presentation.payload.dto.ApiResponseDto;
+import com.mm.bandit.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

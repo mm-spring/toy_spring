@@ -1,7 +1,7 @@
-package com.mm.toy.presentation.payload.exception;
+package com.mm.bandit.presentation.payload.exception;
 
-import com.mm.toy.presentation.payload.code.BaseCode;
-import com.mm.toy.presentation.payload.code.Reason;
+import com.mm.bandit.presentation.payload.code.BaseCode;
+import com.mm.bandit.presentation.payload.code.Reason;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

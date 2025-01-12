@@ -1,9 +1,9 @@
-package com.mm.toy.presentation.payload.dto;
+package com.mm.bandit.presentation.payload.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.mm.toy.presentation.payload.code.BaseCode;
-import com.mm.toy.presentation.payload.code.SuccessStatus;
+import com.mm.bandit.presentation.payload.code.BaseCode;
+import com.mm.bandit.presentation.payload.code.SuccessStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

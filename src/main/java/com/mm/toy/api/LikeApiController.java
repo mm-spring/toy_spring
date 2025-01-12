@@ -2,7 +2,7 @@ package com.mm.toy.api;
 
 import com.mm.toy.Dto.BoardDto;
 import com.mm.toy.domain.Board;
-import com.mm.toy.presentation.payload.dto.ApiResponseDto;
+import com.mm.bandit.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.LikeService;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,10 @@
-package com.mm.toy.presentation.advice;
+package com.mm.bandit.presentation.advice;
 
-import com.mm.toy.presentation.payload.code.Reason;
-import com.mm.toy.presentation.payload.exception.BoardHandler;
-import com.mm.toy.presentation.payload.exception.CommentHandler;
-import com.mm.toy.presentation.payload.exception.LikeHandler;
-import com.mm.toy.presentation.payload.exception.UserHandler;
-import jdk.jshell.spi.ExecutionControl;
+import com.mm.bandit.presentation.payload.code.Reason;
+import com.mm.bandit.presentation.payload.exception.BoardHandler;
+import com.mm.bandit.presentation.payload.exception.CommentHandler;
+import com.mm.bandit.presentation.payload.exception.LikeHandler;
+import com.mm.bandit.presentation.payload.exception.UserHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;

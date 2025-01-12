@@ -2,8 +2,8 @@ package com.mm.toy.service;
 
 import com.mm.toy.domain.User;
 import com.mm.toy.Dto.UserRegisterDto;
-import com.mm.toy.presentation.payload.code.ErrorStatus;
-import com.mm.toy.presentation.payload.exception.UserHandler;
+import com.mm.bandit.presentation.payload.code.ErrorStatus;
+import com.mm.bandit.presentation.payload.exception.UserHandler;
 import com.mm.toy.repository.BoardRepository;
 import com.mm.toy.repository.CommentRepository;
 import com.mm.toy.repository.LikeRepository;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service

@@ -5,14 +5,10 @@ import com.mm.toy.Dto.UserRegisterDto;
 import com.mm.toy.Dto.UserResponseDto;
 import com.mm.toy.Dto.UserUpdateDto;
 import com.mm.toy.domain.User;
-import com.mm.toy.presentation.payload.dto.ApiResponseDto;
-import com.mm.toy.repository.UserRepository;
+import com.mm.bandit.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")

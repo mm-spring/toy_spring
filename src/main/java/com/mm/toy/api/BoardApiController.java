@@ -6,11 +6,10 @@ import com.mm.toy.Dto.BoardSpecificDto;
 import com.mm.toy.Dto.CommentDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
-import com.mm.toy.presentation.payload.dto.ApiResponseDto;
+import com.mm.bandit.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
