@@ -1,9 +1,10 @@
 package com.mm.toy.service;
 
-import com.mm.toy.domain.User;
-import com.mm.toy.Dto.UserRegisterDto;
-import com.mm.toy.repository.UserRepository;
-import com.mm.toy.Dto.UserUpdateDto;
+import com.mm.toy.domain.user.entity.User;
+import com.mm.toy.domain.user.dto.UserRegisterDto;
+import com.mm.toy.domain.user.repository.UserRepository;
+import com.mm.toy.domain.user.dto.UserUpdateDto;
+import com.mm.toy.domain.user.service.UserService;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;

@@ -1,11 +1,13 @@
 package com.mm.toy.service;
 
-import com.mm.toy.domain.Board;
-import com.mm.toy.repository.BoardRepository;
-import com.mm.toy.Dto.BoardRequestDto;
-import com.mm.toy.domain.User;
-import com.mm.toy.Dto.UserRegisterDto;
-import com.mm.toy.repository.UserRepository;
+import com.mm.toy.domain.board.entity.Board;
+import com.mm.toy.domain.board.service.BoardService;
+import com.mm.toy.domain.board.repository.BoardRepository;
+import com.mm.toy.domain.board.dto.BoardRequestDto;
+import com.mm.toy.domain.user.entity.User;
+import com.mm.toy.domain.user.dto.UserRegisterDto;
+import com.mm.toy.domain.user.repository.UserRepository;
+import com.mm.toy.domain.user.service.UserService;
 import com.mm.toy.global.service.DatabaseCleanup;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

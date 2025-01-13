@@ -1,10 +1,13 @@
 package com.mm.toy.service;
 
-import com.mm.toy.Dto.BoardRequestDto;
-import com.mm.toy.Dto.UserRegisterDto;
-import com.mm.toy.domain.Board;
-import com.mm.toy.domain.Comment;
-import com.mm.toy.repository.CommentRepository;
+import com.mm.toy.domain.board.dto.BoardRequestDto;
+import com.mm.toy.domain.user.dto.UserRegisterDto;
+import com.mm.toy.domain.board.entity.Board;
+import com.mm.toy.domain.comment.entity.Comment;
+import com.mm.toy.domain.board.service.BoardService;
+import com.mm.toy.domain.comment.repository.CommentRepository;
+import com.mm.toy.domain.comment.service.CommentService;
+import com.mm.toy.domain.user.service.UserService;
 import com.mm.toy.global.service.DatabaseCleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;

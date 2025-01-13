@@ -1,8 +1,6 @@
 package com.mm.bandit.domain.user.service;
 
-import com.mm.toy.domain.User;
-
-import java.lang.reflect.Member;
+import com.mm.toy.domain.user.entity.User;
 
 public interface UserQueryService {
     User getById(Long id);
