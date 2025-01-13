@@ -1,4 +1,4 @@
-package com.mm.bandit.domain.user.service;
+package com.mm.toy.domain.user.service;
 
 import com.mm.toy.domain.user.entity.User;
 

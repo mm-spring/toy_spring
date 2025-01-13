@@ -1,7 +1,7 @@
 package com.mm.toy.security.jwt.service;
 
 import com.mm.toy.domain.user.entity.User;
-import com.mm.bandit.domain.user.service.UserQueryService;
+import com.mm.toy.domain.user.service.UserQueryService;
 import com.mm.toy.global.service.RedisService;
 import com.mm.toy.presentation.payload.code.ErrorStatus;
 import com.mm.toy.presentation.payload.exception.GeneralException;
@@ -11,7 +11,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Setter
+@Service
 public class TokenServiceImpl implements TokenService {
     private final Key key;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -38,12 +38,12 @@ public class TokenServiceImpl implements TokenService {
     public TokenServiceImpl(@Value("${app.jwt.secret}") String key,
                             AuthenticationManagerBuilder authenticationManagerBuilder,
                             RedisService redisService,
-                            UserQueryService UserQueryService) {
+                            UserQueryService userQueryService) {
         byte[] keyBytes = Decoders.BASE64.decode(key);
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.redisService = redisService;
-        this.userQueryService = UserQueryService;
+        this.userQueryService = userQueryService;
     }
 
     @Override

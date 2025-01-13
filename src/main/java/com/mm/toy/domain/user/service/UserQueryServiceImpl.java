@@ -1,4 +1,4 @@
-package com.mm.bandit.domain.user.service;
+package com.mm.toy.domain.user.service;
 
 import com.mm.toy.presentation.payload.code.ErrorStatus;
 import com.mm.toy.presentation.payload.exception.UserHandler;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class MemberQueryServiceImpl implements UserQueryService {
+public class UserQueryServiceImpl implements UserQueryService {
     private final UserRepository userRepository;
 
 
