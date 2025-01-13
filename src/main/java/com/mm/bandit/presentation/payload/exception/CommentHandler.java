@@ -1,6 +1,6 @@
-package com.mm.toy.presentation.payload.exception;
+package com.mm.bandit.presentation.payload.exception;
 
-import com.mm.toy.presentation.payload.code.BaseCode;
+import com.mm.bandit.presentation.payload.code.BaseCode;
 
 public class CommentHandler extends GeneralException {
 

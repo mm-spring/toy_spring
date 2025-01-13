@@ -8,3 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul
     username: root
     password: 3720
+  data:
+    redis:
+      host: localhost
+      port: 6379

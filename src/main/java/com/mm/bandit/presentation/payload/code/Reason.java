@@ -1,4 +1,4 @@
-package com.mm.toy.presentation.payload.code;
+package com.mm.bandit.presentation.payload.code;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -6,11 +6,10 @@ import com.mm.toy.Dto.BoardSpecificDto;
 import com.mm.toy.Dto.CommentDto;
 import com.mm.toy.domain.Board;
 import com.mm.toy.domain.Comment;
-import com.mm.toy.presentation.payload.dto.ApiResponseDto;
+import com.mm.bandit.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.BoardService;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,23 +23,23 @@ public class BoardApiController {
     private final BoardService boardService;
     private final UserService userService;
 
-    @PostMapping("/board")
+    @PostMapping
     public ApiResponseDto<Long> writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return ApiResponseDto.onSuccess(boardService.writeBoard(username, boardRequestDto));
     }
 
-    @PutMapping("/board/{boardId}")
+    @PutMapping("/{boardId}")
     public ApiResponseDto<Long> editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return ApiResponseDto.onSuccess(boardService.editBoard(username, boardId, boardRequestDto));
     }
 
-    @DeleteMapping("/board/{boardId}")
+    @DeleteMapping("/{boardId}")
     public ApiResponseDto<Boolean> removeBoard(@PathVariable Long boardId, @RequestParam String username) {
         boardService.deleteBoard(boardId, username);
         return ApiResponseDto.onSuccess(true);
     }
 
-    @GetMapping("/board")
+    @GetMapping
     public ApiResponseDto<List<BoardDto>> getBoards(){
         return ApiResponseDto.onSuccess(
                 boardService.getAllBoards()
@@ -50,7 +49,7 @@ public class BoardApiController {
         );
     }
 
-    @GetMapping("/board/user")
+    @GetMapping("/user")
     public ApiResponseDto<List<BoardDto>> getBoardsByUsername(@RequestParam String username){
         return ApiResponseDto.onSuccess
                 (boardService.getBoardsByUsername(username)
@@ -59,7 +58,7 @@ public class BoardApiController {
                 .collect(toList()));
     }
 
-    @GetMapping("/board/{boardId}")
+    @GetMapping("/{boardId}")
     public ApiResponseDto<BoardSpecificDto> getBoard(@PathVariable Long boardId){
         Board board = boardService.getBoardById(boardId);
 

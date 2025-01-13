@@ -3,8 +3,13 @@ package com.mm.toy.domain;
 import com.mm.toy.Dto.UserUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -13,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "user_id")
@@ -39,7 +44,8 @@ public class User {
 
     private String email;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private String name;
 
@@ -59,6 +65,11 @@ public class User {
     public void addComment(Comment comment){ this.comments.add(comment); }
 
     public void addLike(Like like){this.likes.add(like);}
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority(this.role.getKey()));
+    }
 
 }
 

@@ -5,14 +5,10 @@ import com.mm.toy.Dto.UserRegisterDto;
 import com.mm.toy.Dto.UserResponseDto;
 import com.mm.toy.Dto.UserUpdateDto;
 import com.mm.toy.domain.User;
-import com.mm.toy.presentation.payload.dto.ApiResponseDto;
-import com.mm.toy.repository.UserRepository;
+import com.mm.bandit.presentation.payload.dto.ApiResponseDto;
 import com.mm.toy.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -21,12 +17,12 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping
     public ApiResponseDto<Long> signUp(@RequestBody UserRegisterDto userRegisterDto) {
         return ApiResponseDto.onSuccess(userService.registerUser(userRegisterDto));
     }
 
-    @GetMapping("/login")
+    @GetMapping
     public ApiResponseDto<UserLoginDto> userLogin(@RequestParam String email, @RequestParam String password) {
         User user = userService.getUserByEmailAndPassword(email, password);
 
@@ -37,13 +33,13 @@ public class UserApiController {
         return ApiResponseDto.onSuccess(userLoginDto);
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping
     public ApiResponseDto<Boolean> deleteUser(@RequestParam String username) {
         userService.deleteUser(userService.getUserInfoByUsername(username).getUsername());
         return ApiResponseDto.onSuccess(true);
     }
 
-    @PutMapping("/user/{userId}")
+    @PutMapping("/{userId}")
     public ApiResponseDto<Long> editUser(@RequestBody UserUpdateDto userUpdateDto, @PathVariable Long uesrId) {
         User user = userService.getUserInfoById(uesrId);
 
