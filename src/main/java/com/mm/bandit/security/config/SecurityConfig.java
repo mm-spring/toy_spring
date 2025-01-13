@@ -74,14 +74,9 @@ public class SecurityConfig {
                             .requestMatchers("/ws/**", "/subscribe/**", "/publish/**").permitAll()
                             .requestMatchers("/", "/.well-known/**", "/css/**", "/*.ico", "/error", "/images/**").permitAll()
                             .requestMatchers(permitAllRequest()).permitAll()
-                            .requestMatchers(additionalSwaggerRequests()).permitAll()
                             .requestMatchers(authRelatedEndpoints()).permitAll()
                             .requestMatchers(permitAllRequestV2()).permitAll()
                             .anyRequest().authenticated();
-                    //                            .requestMatchers(authorizationAdmin()).hasRole("ADMIN")
-                    //                            .requestMatchers(authorizationDormant()).hasRole("DORMANT")
-                    //                            .requestMatchers(authorizationGuest()).hasRole("GUEST")
-                    //                            .requestMatchers(authorizationUser()).hasRole("USER");
                 });
     }
 
@@ -103,19 +98,14 @@ public class SecurityConfig {
     private RequestMatcher[] permitAllRequest() {
         List<RequestMatcher> requestMatchers = List.of(
                 antMatcher(HttpMethod.GET, "/"),
-                antMatcher(HttpMethod.POST, "/api/members"),
-                antMatcher(HttpMethod.GET, "/api/members/{memberId}"),
-                antMatcher(HttpMethod.GET, "/api/promotions/{promotionId}"),
-                antMatcher(HttpMethod.GET, "/api/promotions"),
-                antMatcher(HttpMethod.GET, "/api/promotions/search"),
-                antMatcher(HttpMethod.GET, "/api/promotions/bank/type"),
-                antMatcher(HttpMethod.GET, "/api/comments/{promotionId}"),
-                antMatcher(HttpMethod.GET, "/api/likes/promotion/{promotionId}/count"),
-                antMatcher(HttpMethod.GET, "/api/likes/music/{musicId}/count"),
-                antMatcher(HttpMethod.POST, "/api/tokens/reissue"),
-                antMatcher(HttpMethod.GET,"/api/tokens/login"),
-                antMatcher(HttpMethod.POST, "/api/images"),
-                antMatcher("/api/kakao/**")
+                antMatcher(HttpMethod.POST, "/api/users"),
+                antMatcher(HttpMethod.GET, "/api/users"),
+                antMatcher(HttpMethod.GET, "/api/users/user"),
+                antMatcher(HttpMethod.GET, "/api/boards"),
+                antMatcher(HttpMethod.GET, "/api/boards/user"),
+                antMatcher(HttpMethod.GET, "/api/board/{boardId}"),
+                antMatcher(HttpMethod.GET, "/api/comments"),
+                antMatcher(HttpMethod.GET, "/api/comments/boards")
         );
         return requestMatchers.toArray(RequestMatcher[]::new);
     }private RequestMatcher[] permitAllRequestV2() {
@@ -126,22 +116,8 @@ public class SecurityConfig {
         );
         return requestMatchers.toArray(RequestMatcher[]::new);
     }
-    private RequestMatcher[] additionalSwaggerRequests() {
-        List<RequestMatcher> requestMatchers = List.of(
-                antMatcher("/swagger-ui/**"),
-                antMatcher("/swagger-ui"),
-                antMatcher("/swagger-ui.html"),
-                antMatcher("/swagger/**"),
-                antMatcher("/swagger-resources/**"),
-                antMatcher("/v3/api-docs/**"),
-                antMatcher("/profile")
-
-        );
-        return requestMatchers.toArray(RequestMatcher[]::new);
-    }
     private RequestMatcher[] authRelatedEndpoints() {
         List<RequestMatcher> requestMatchers = List.of(
-                antMatcher("/oauth2/**"),
                 antMatcher("/login/**"),
                 antMatcher("/auth/**")
         );

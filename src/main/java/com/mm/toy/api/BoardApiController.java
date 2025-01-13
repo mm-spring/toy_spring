@@ -23,23 +23,23 @@ public class BoardApiController {
     private final BoardService boardService;
     private final UserService userService;
 
-    @PostMapping("/board")
+    @PostMapping
     public ApiResponseDto<Long> writeBoard(@RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return ApiResponseDto.onSuccess(boardService.writeBoard(username, boardRequestDto));
     }
 
-    @PutMapping("/board/{boardId}")
+    @PutMapping("/{boardId}")
     public ApiResponseDto<Long> editBoard(@PathVariable Long boardId, @RequestParam String username, @RequestBody BoardRequestDto boardRequestDto) {
         return ApiResponseDto.onSuccess(boardService.editBoard(username, boardId, boardRequestDto));
     }
 
-    @DeleteMapping("/board/{boardId}")
+    @DeleteMapping("/{boardId}")
     public ApiResponseDto<Boolean> removeBoard(@PathVariable Long boardId, @RequestParam String username) {
         boardService.deleteBoard(boardId, username);
         return ApiResponseDto.onSuccess(true);
     }
 
-    @GetMapping("/board")
+    @GetMapping
     public ApiResponseDto<List<BoardDto>> getBoards(){
         return ApiResponseDto.onSuccess(
                 boardService.getAllBoards()
@@ -49,7 +49,7 @@ public class BoardApiController {
         );
     }
 
-    @GetMapping("/board/user")
+    @GetMapping("/user")
     public ApiResponseDto<List<BoardDto>> getBoardsByUsername(@RequestParam String username){
         return ApiResponseDto.onSuccess
                 (boardService.getBoardsByUsername(username)
@@ -58,7 +58,7 @@ public class BoardApiController {
                 .collect(toList()));
     }
 
-    @GetMapping("/board/{boardId}")
+    @GetMapping("/{boardId}")
     public ApiResponseDto<BoardSpecificDto> getBoard(@PathVariable Long boardId){
         Board board = boardService.getBoardById(boardId);
 

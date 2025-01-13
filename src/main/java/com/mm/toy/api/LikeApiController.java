@@ -12,23 +12,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/like")
+@RequestMapping("/api/likes")
 public class LikeApiController {
     private final LikeService likeService;
     private final BoardService boardService;
 
-    @PostMapping("boards/{boardId}")
+    @PostMapping("/boards/{boardId}")
     public ApiResponseDto<Long> likeBoard(@PathVariable Long boardId, @RequestParam String username) {
         return ApiResponseDto.onSuccess(likeService.likeBoard(username, boardId));
     }
 
-    @DeleteMapping("boards/{boardId}")
+    @DeleteMapping("/boards/{boardId}")
     public ApiResponseDto<Boolean> unlikeBoard(@PathVariable Long boardId, @RequestParam String username) {
         likeService.unlikeBoard(username, boardId);
         return ApiResponseDto.onSuccess(true);
     }
 
-    @GetMapping("boards")
+    @GetMapping("/boards")
     public ApiResponseDto<List<BoardDto>> seeLikeBoards(@RequestParam String username) {
         List<Board> boards = likeService.getLikedBoardsByUsername(username);
         return ApiResponseDto.onSuccess(

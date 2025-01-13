@@ -17,27 +17,27 @@ import static java.util.stream.Collectors.toList;
 public class CommentApiController {
     private final CommentService commentService;
 
-    @PostMapping("/boards/{boardId}/comment")
+    @PostMapping("/{boardId}/comment")
     public ApiResponseDto<Long> writeComment(@PathVariable Long boardId,
                                             @RequestParam String username,
                                             @RequestParam String content) {
         return ApiResponseDto.onSuccess(commentService.writeComment(username, boardId, content));
     }
 
-    @DeleteMapping("comment/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ApiResponseDto<Boolean> removeComment(@PathVariable Long commentId, @RequestParam String username) {
         commentService.deleteComment(username, commentId);
         return ApiResponseDto.onSuccess(true);
     }
 
-    @PutMapping("comment/{commentId}")
+    @PutMapping("/{commentId}")
     public ApiResponseDto<Long> editComment(@PathVariable Long commentId,
                             @RequestParam String username,
                             @RequestParam String content) {
         return ApiResponseDto.onSuccess(commentService.updateComment(username, commentId, content));
     }
 
-    @GetMapping("comment")
+    @GetMapping
     public ApiResponseDto<List<CommentDto>> getCommentsMine(@RequestParam String username){
         return ApiResponseDto.onSuccess(
                 commentService.getCommentsByUser(username)
