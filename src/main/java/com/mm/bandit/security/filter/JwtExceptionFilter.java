@@ -1,7 +1,7 @@
 package com.mm.bandit.security.filter;
 
 import com.mm.bandit.presentation.payload.code.ErrorStatus;
-import com.mm.bandit.presentation.payload.exception.JwtAuthenticationException;
+import com.mm.bandit.security.exception.JwtAuthenticationException;
 import com.mm.bandit.security.exception.CustomErrorSend;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

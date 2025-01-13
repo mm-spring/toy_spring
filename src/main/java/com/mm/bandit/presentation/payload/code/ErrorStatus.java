@@ -32,7 +32,12 @@ public enum ErrorStatus implements BaseCode{
 
     // 인증 오류(4500~4599)
     AUTH_MUST_AUTHORIZED_URI(BAD_REQUEST, 4500, "인증이 필수인 uri입니다."),
-    AUTH_ROLE_CANNOT_EXECUTE_URI(BAD_REQUEST, 4501, "해당 인가로는 실행할 수 없는 동작입니다.");
+    AUTH_ROLE_CANNOT_EXECUTE_URI(BAD_REQUEST, 4501, "해당 인가로는 실행할 수 없는 동작입니다."),
+    AUTH_INVALID_TOKEN(BAD_REQUEST, 4502, "유효하지 않은 토큰입니다."),
+    AUTH_INVALID_REFRESH_TOKEN(BAD_REQUEST, 4503, "유효하지 않은 리프레시 토큰입니다."),
+    AUTH_TOKEN_HAS_EXPIRED(BAD_REQUEST, 4504, "토큰의 유효기간이 만료되었습니다."),
+    AUTH_TOKEN_IS_UNSUPPORTED(BAD_REQUEST, 4504, "서버에서 지원하는 형식의 토큰이 아닙니다."),
+    AUTH_IS_NULL(BAD_REQUEST, 4505, "토큰 값이 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final Integer code;

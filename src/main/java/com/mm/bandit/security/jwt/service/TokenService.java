@@ -7,7 +7,7 @@ import java.util.Date;
 
 public interface TokenService {
 
-    JwtToken login(String username, String password);
+    JwtToken login(String email, String password);
     JwtToken issueTokens(String refreshToken);
 
     JwtToken generateToken(Authentication authentication);
