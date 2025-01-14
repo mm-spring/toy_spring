@@ -52,6 +52,10 @@ public class User implements UserDetails {
 
     private String name;
 
+    // OAuth2
+    private String provider; // 어떤 OAuth인지
+    private String provideId; // 해당 OAuth의 ID
+
     public void updatePassword(String updatePassword){
         this.password = updatePassword;
     }

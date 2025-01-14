@@ -1,11 +1,11 @@
 package com.mm.toy.security.config;
 
+import com.mm.toy.security.config.oauth.PrincipalOauth2UserService;
 import com.mm.toy.security.exception.JwtAccessDeniedHandler;
 import com.mm.toy.security.exception.JwtAuthenticationEntryPoint;
 import com.mm.toy.security.filter.JwtAuthenticationFilter;
 import com.mm.toy.security.filter.JwtExceptionFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -34,6 +35,12 @@ public class SecurityConfig {
     private final JwtExceptionFilter jwtExceptionFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+
+    @Bean
+    public BCryptPasswordEncoder encodePwd(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -98,6 +105,7 @@ public class SecurityConfig {
                 antMatcher(HttpMethod.GET, "/"),
                 antMatcher(HttpMethod.POST, "/api/users"),
                 antMatcher(HttpMethod.GET, "/api/users"),
+                antMatcher(HttpMethod.DELETE, "/api/users"),
                 antMatcher(HttpMethod.GET, "/api/users/user"),
                 antMatcher(HttpMethod.GET, "/api/boards"),
                 antMatcher(HttpMethod.GET, "/api/boards/user"),

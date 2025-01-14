@@ -12,6 +12,14 @@ spring:
     redis:
       host: localhost
       port: 6379
+  security:
+    registration:
+      google:
+        client-id: ${GOOGLE_CLIENT_ID}
+        client-secret: ${GOOGLE_CLIENT_SECRET}
+        scope: # 기본 값 openid,profile,email => profile, email 로 설정 변경
+          - profile
+          - email
 app:
   jwt:
     secret: 70d29b0798e4c1f7d2838ac29ebce7b1af10fc68936e07658a907dd55daa655a83dc9b9c918bb87cfb638b7c3d61e386936dc090e7fdfa0bde1a91245ff67611

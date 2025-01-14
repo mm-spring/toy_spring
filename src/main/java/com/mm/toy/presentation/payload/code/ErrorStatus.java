@@ -8,7 +8,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorStatus implements BaseCode{
+public enum ErrorStatus implements BaseCode {
     // 서버 오류
     _INTERNAL_SERVER_ERROR(INTERNAL_SERVER_ERROR, 5000, "Server error. Please contact to the manager"),
 
@@ -37,7 +37,10 @@ public enum ErrorStatus implements BaseCode{
     AUTH_INVALID_REFRESH_TOKEN(BAD_REQUEST, 4503, "유효하지 않은 리프레시 토큰입니다."),
     AUTH_TOKEN_HAS_EXPIRED(BAD_REQUEST, 4504, "토큰의 유효기간이 만료되었습니다."),
     AUTH_TOKEN_IS_UNSUPPORTED(BAD_REQUEST, 4504, "서버에서 지원하는 형식의 토큰이 아닙니다."),
-    AUTH_IS_NULL(BAD_REQUEST, 4505, "토큰 값이 존재하지 않습니다.");
+    AUTH_IS_NULL(BAD_REQUEST, 4505, "토큰 값이 존재하지 않습니다."),
+    // OAuth2 - Google
+    AUTH_IS_NOT_PERMITTED(BAD_REQUEST, 4506, "Google을 통한 로그인만 가능합니다.");
+
 
     private final HttpStatus httpStatus;
     private final Integer code;
